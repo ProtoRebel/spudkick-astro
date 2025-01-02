@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ValueProposition from '../components/ValuePropSlideshow.astro';
+import PageSection from '../components/PageSection.astro';
+
+const title = 'Fat-Free Websites & Software Solutions';
+const description = 'ProtoRebel specializes in sleek, efficient websites and software. We help bring challenging ideas to life for businesses beyond conventional marketing.';
+const permalink = Astro.site.href;
+const sections = [
+  {
+    title:      'What Happens',
+    photo:      '/assets/images/heading-circuits.webp',
+    listType:   'ordered',
+    list: [
+      ['Identify & penetrate your market'],
+      ['Design & build your website/software'],
+      ['Be as involved as you’d like'],
+      ['Launch website/software'],
+      ['Managed + maintained with unlimited changes']
+    ],
+    quote:      'See the Work',
+    buttonLink: '/portfolio',
+    button:     'Portfolio'
+  },
+  {
+    title:      'Pricing',
+    photo:      '/assets/images/heading-heatsync.webp',
+    listType:   'unordered',
+    list: [
+      ['Start your website for $750'],
+      ['Build only what you need'],
+      ['Pay your software/website over the next 3 years'],
+      ['Free hosting while you pay off your website']
+    ],
+    quote:      'Estimate budget and timeline',
+    buttonLink: '/contact',
+    button:     'Get Started'
+  },
+  {
+    title:      'Qualifications',
+    photo:      '/assets/images/heading-tines.webp',
+    listType:   'unordered',
+    list: [
+      ['20+ years of professional industry experience'],
+      ['Extensive experience in startups'],
+      ['Applying principles of startups to established businesses'],
+      ['Long history of successful software still in use, built from the ground-up'],
+      ['No one-size-fits-all solutions: your website/software is made to work best for you']
+    ],
+    quote:      'History and details',
+    buttonLink: '/about',
+    button:     'Learn More'
+  }
+];
+---
+
+<BaseLayout title={title} description={description} permalink={permalink} current="home">
+  <ValueProposition />
+  <section>
+    <p>
+            ProtoRebel specializes in “fat-free” websites and software.
+            Imagine a digital diet &mdash; no bloat, no unnecessary extras, just the essentials.
+            The goal is a sleek, efficient, and effective digital presence.
+            You can engage as much or as little as desired with flexible payment options.
+    </p>
+    <p>
+            We specialize in working with people and businesses that offer products and services that
+            don’t fit with conventional advertising, marketing, and digital services companies.
+    </p>
+  </section>
+  {sections.map((section) => (
+    <PageSection section={section} />
+  ))}
+</BaseLayout>
+
+<style lang="postcss">
+    section {
+        padding: var(--pad-small);
+        background-color: var(--color-black);
+        max-width: var(--layout-max--reading);
+    }
+
+    p {
+        margin: var(--pad-small) 0;
+        padding: 0;
+    }
+
+    @media (min-width: 960px) {
+        section {
+            padding: var(--pad-small) var(--pad) var(--pad-small) 0;
+
+        }
+    }
+</style>

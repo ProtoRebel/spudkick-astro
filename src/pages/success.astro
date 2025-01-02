@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/Button.astro';
+import HeaderImage from '../components/HeaderImage.astro';
+
+const title = 'Software & Web Design, Development, and Management | Boise, Idaho';
+const description = 'ProtoRebel is a US-based agency from Boise, Idaho, specializing in software, app, and web design. Pricing and timelines for websites and software.';
+const permalink = `${Astro.site.href}about`;
+---
+
+<BaseLayout title={title} description={description} permalink={permalink} current="about">
+  <HeaderImage img="/assets/images/pr-sketch-thumb.webp" title="Thumbs up with letter" />
+  <section>
+    <h2>Message Received!</h2>
+    <p>Thanks for your message! We'll be in touch ASAP. In the meantime, please check out this stuff:</p>
+    <ul>
+      <li>
+        <h3>Company History, Project Process & Cost</h3>
+        <Button url="/about" title="About ProtoRebel" />
+      </li>
+      <li>
+        <h3>Past Apps, Websites, Software & Details</h3>
+        <Button url="/portfolio" title="Portfolio Case Studies" />
+      </li>
+      <li>
+        <h3>Schedule Meeting & Quick Answers</h3>
+        <Button url="/contact" title="Contact ProtoRebel" />
+      </li>
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+    section {
+        padding: 0 var(--pad-small);
+        background-color: var(--color-black);
+        max-width: var(--layout-max--reading);
+    }
+
+    @media (min-width: 960px) {
+        section {
+            padding: 0 var(--pad) 0 0;
+        }
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin: 0 0 var(--pad-small) 0;
+    }
+
+    h3 {
+        font-family: var(--font-family--serif);
+        font-style: italic;
+        margin-bottom: 0.75rem;
+    }
+</style>

@@ -1,0 +1,14 @@
+---
+import Logo from './Logo.astro';
+import Nav from './Nav.astro';
+
+const { current = '' } = Astro.props;
+---
+
+<header class=`header header-${current}`>
+  <Logo current={current} />
+  <Nav current={current} />
+</header>
+
+<style>
+</style>

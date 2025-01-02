@@ -1,0 +1,276 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageSection from '../components/PageSection.astro';
+import HeaderImage from '../components/HeaderImage.astro';
+import RotatingWords from '../components/RotatingWords.astro';
+import Forms from '../components/Forms.astro';
+
+const title = 'Starting Your Website and Software Project';
+const description = 'Reach out to an experienced web and software engineer for insights on project costs and timelines. We’ll provide the information you need to get started.';
+const permalink = `${Astro.site.href}contact`;
+
+const sections = [
+  {
+    title:      'Here\'s Some Quick Answers',
+    photo:      '/assets/images/heading-circuits.webp',
+    listType:   'unordered',
+    list: [
+      ['What’s the first step?', [
+        'We do a brief consultation to see if we’re a good fit',
+        'You pay the $750 initiation fee',
+        'We discuss the full project, your business, your goals, your dreams, and everything in between',
+        'Your project requirements are put together along with some designed assets',
+        'Your website is estimated and we can begin the development process'
+      ]],
+      ['How does the design/development work?', [
+        'Every project is unique',
+        'Software, design, and marketing all depends on where you sit in the market and what website, software, or accomplishes your business needs',
+        'Technology and design decisions are made with your goals and the future at top of mind'
+      ]],
+      ['How long does it take?', [
+        'Every project is unique, the time frame can be a matter of a couple weeks to a year or longer – getting you to market ASAP is the goal, so we try to get at that few weeks mark quickly',
+        'We will meet with you regularly (based on your schedule/availability) and with progress updates containing as much detail as you like so you can have a functional grasp on what was done and what remains',
+        'We do all but waterboard the software (but aren\'t above waterboarding it) before giving it to you to rip apart and test'
+      ]],
+      ['What about after it’s launched?', [
+        'Maintenance continues for the 3 years of your website term',
+        'Send us any new photos, videos, or text and we will update these things for free'
+      ]]
+    ]
+  }
+];
+
+const socialNetworks = [
+  {
+    name:   'Facebook',
+    user:   '@protorebel',
+    url:    'https://www.facebook.com/protorebel',
+    short:  'facebook.com',
+    icon:   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                  <path d="M0 0v200h200V0H0Zm100 173.6c-40.6 0-73.6-32.9-73.6-73.6s33-73.6 73.6-73.6 73.6 32.9 73.6 73.6-32.9 73.6-73.6 73.6Z"/>
+                  <path d="M123.4 85.3h-17.3v-9.8c0-5.1.4-8.3 7.7-8.3h9.2V51.6c-4.5-.5-8.9-.7-13.4-.7-13.3 0-23 8.1-23 23.1v11.3H71.9v19.6h14.7v44.2h19.6v-44.2h15l2.3-19.6Z"/>
+                </svg>`
+  },
+  {
+    name:   'LinkedIn',
+    user:   '@protorebel',
+    url:    'https://www.linkedin.com/company/protorebel',
+    short:  'linkedin.com',
+    icon:   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                  <path d="M0 0v200h200V0H0Zm100 173.6c-40.6 0-73.6-32.9-73.6-73.6s33-73.6 73.6-73.6 73.6 32.9 73.6 73.6-32.9 73.6-73.6 73.6Z"/>
+                  <circle cx="71.1" cy="63" r="10.6"/>
+                  <path d="M126.8 80.5c-8.8 0-14.7 4.8-17.1 9.4h-.4v-8.1H92v58.5h18.1v-28.9c0-7.6 1.5-15 11-15s9.4 8.6 9.4 15.4v28.5h18.1v-32.2c0-15.7-3.3-27.7-21.8-27.7Zm-64.5 1.4h18.3v58.5H62.3z"/>
+                </svg>`
+  },
+  {
+    name:   'Github',
+    user:   '@ProtoRebel',
+    url:    'https://github.com/ProtoRebel',
+    short:  'github.com',
+    icon:   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                  <path d="M0 0v200h200V0H0Zm100 173.6c-40.6 0-73.6-32.9-73.6-73.6s33-73.6 73.6-73.6 73.6 32.9 73.6 73.6-32.9 73.6-73.6 73.6Z"/>
+                  <path d="M140.2 78.4s3.7-14.4-1.3-20.5c-5.6-.6-15.6 5.3-19.9 8.1 0 0-6.8-2.8-18-2.8S83 66 83 66c-4.3-2.8-14.3-8.7-19.9-8.1-5 6.1-1.3 20.5-1.3 20.5s-7 7-7 20.5c0 35 32.8 34.6 32.8 34.6s-3.3 3.7-4 9.2c-2.3.8-5.4 1.8-8.4 1.8-7.1 0-12.5-6.9-14.5-10.1-2-3.2-6-5.8-9.7-5.8s-3.7 1.2-3.7 2.6 3.4 2.4 5.7 5c4.8 5.5 4.7 17.9 21.8 17.9s5.6-.5 8.5-.9c0 6 .5 11.9-2.2 17.5 5.2 2.9 14 2.9 19.8 2.9 4.2 0 8.4-.4 12.5-1.2 1.5-.3 4.6-.4 5.8-1.3 1.5-1.1.5-2.7 0-4.6-1.6-6.8-.7-14.7-.7-21.7 0-6.6-4.2-11.3-4.2-11.3s32.8.4 32.8-34.6-7-20.5-7-20.5Z"/>
+                </svg>`
+  },
+  {
+    name:   'Bluesky',
+    user:   '@protorebel',
+    url:    'https://protorebel.bsky.social',
+    short:  'bsky.social',
+    icon:   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                  <path d="M0 0v200h200V0H0Zm100 173.6c-40.6 0-73.6-32.9-73.6-73.6s33-73.6 73.6-73.6 73.6 32.9 73.6 73.6-32.9 73.6-73.6 73.6Z"/>
+                  <path d="M73.9 64.8c10.6 7.9 21.9 24.1 26.1 32.7v22.8c0-.5-.2 0-.6 1.2-2.2 6.4-10.7 31.4-30.1 11.4-10.2-10.5-5.5-21.1 13.1-24.2-10.6 1.8-22.6-1.2-25.9-13-.9-3.4-2.6-24.3-2.6-27.1 0-14.1 12.3-9.7 19.9-3.9Zm52.2 0c-10.6 7.9-21.9 24.1-26.1 32.7v22.8c0-.5.2 0 .6 1.2 2.2 6.4 10.7 31.4 30.1 11.4 10.2-10.5 5.5-21.1-13.1-24.2 10.6 1.8 22.6-1.2 25.9-13 .9-3.4 2.6-24.3 2.6-27.1 0-14.1-12.3-9.7-19.9-3.9Z"/>
+                </svg>`
+  },
+  {
+    name:   'Instagram',
+    user:   '@proto.rebel',
+    url:    'https://www.instagram.com/proto.rebel',
+    short:  'instagram.com',
+    icon:   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                  <path d="M0 0v200h200V0H0Zm100 173.6c-40.6 0-73.6-32.9-73.6-73.6s33-73.6 73.6-73.6 73.6 32.9 73.6 73.6-32.9 73.6-73.6 73.6Z"/>
+                  <path d="M99.6 54.1c-42.2 0-45.5 3.3-45.5 45.5v.8c0 42.2 3.3 45.5 45.5 45.5h.8c42.2 0 45.5-3.3 45.5-45.5v-.4c0-42.5-3.3-45.9-45.9-45.9h-.4Zm27.9 13.8c2.5 0 4.6 2 4.6 4.6s-2 4.6-4.6 4.6-4.6-2-4.6-4.6 2-4.6 4.6-4.6Zm-27.6 9.2c12.7 0 23 10.2 23 22.9s-10.2 23-22.9 23-23-10.2-23-22.9 10.2-23 22.9-23Zm.1 9.1c-7.6 0-13.7 6.2-13.7 13.8 0 7.6 6.2 13.7 13.8 13.7 7.6 0 13.7-6.2 13.7-13.8 0-7.6-6.2-13.7-13.8-13.7Z"/>
+                </svg>`
+  },
+  {
+    name:   'X',
+    user:   '@ProtoRebelLlc',
+    url:    'https://x.com/ProtoRebelLlc',
+    short:  'x.com',
+    icon:   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                  <path d="M0 0v200h200V0H0Zm100 173.6c-40.6 0-73.6-32.9-73.6-73.6s33-73.6 73.6-73.6 73.6 32.9 73.6 73.6-32.9 73.6-73.6 73.6Z"/>
+                  <path fill-rule="evenodd" d="M139.5 141.2 107.1 94 138 58.3h-8.5l-26.2 30.3-20.7-30.3H56.4l32.4 47.2L58 141.1h8.5l26.1-30.2 20.7 30.3h26.2ZM79 65.1l47.4 69.1h-9.5L69.5 65.1H79Z"/>
+                </svg>`
+  },
+  {
+    name:   'Reddit',
+    user:   '@proto-rebel',
+    url:    'https://www.reddit.com/user/proto-rebel/',
+    short:  'reddit.com',
+    icon:   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                  <path d="M0 0v200h200V0H0Zm100 173.6c-40.6 0-73.6-32.9-73.6-73.6s33-73.6 73.6-73.6 73.6 32.9 73.6 73.6-32.9 73.6-73.6 73.6Z"/>
+                  <path d="M109.4 55.8c-7.4 0-12.9 6.1-12.9 12.9v11.9c-9.7.5-18.6 3.1-25.7 7.2-2.7-2.6-6.4-3.8-10-3.8-3.9 0-7.8 1.3-10.5 4.4v.1c-2.6 3.3-3.6 7.6-2.9 11.9.6 4 2.9 7.9 6.9 10.5v1.3c0 17.5 20.6 31.8 46 31.8s46-14.3 46-31.8v-1.3c4-2.6 6.3-6.6 6.9-10.5.7-4.3-.3-8.7-2.9-11.9v-.1c-2.7-3.1-6.7-4.4-10.5-4.4-3.6 0-7.2 1.2-10 3.8-7.1-4.1-16-6.7-25.7-7.2V68.7c0-3.5 2-5.9 5.9-5.9s4.1.9 7.6 2.2c3 1 6.8 2.1 11.8 2.4 1.2 3.5 4.5 6 8.3 6s8.8-4 8.8-8.8-4-8.8-8.8-8.8-6.2 1.9-7.7 4.6c-4.2-.2-7.3-1.1-10.1-2-3.2-1.1-6.1-2.6-9.9-2.6ZM60.8 91.1c1.4 0 2.7.4 3.8 1-3.9 3.3-6.9 7.1-8.7 11.2-.9-1.2-1.5-2.5-1.7-3.9-.4-2.4.3-4.8 1.5-6.3 1.1-1.1 3-2 5.1-2Zm78.4 0c2.1 0 4.1.8 5.1 2 1.1 1.5 1.8 3.9 1.5 6.3-.2 1.4-.8 2.7-1.7 3.9-1.8-4.2-4.7-8-8.7-11.2 1.1-.6 2.4-1 3.8-1Zm-56.9 7.1c3.9 0 7.1 3.2 7.1 7.1s-3.2 7.1-7.1 7.1-7.1-3.2-7.1-7.1 3.2-7.1 7.1-7.1Zm35.4 0c3.9 0 7.1 3.2 7.1 7.1s-3.2 7.1-7.1 7.1-7.1-3.2-7.1-7.1 3.2-7.1 7.1-7.1Zm.8 19.6c-2.3 6.6-9.5 12.3-18.5 12.3s-16.3-5.7-18.5-11.8c4.1 3.3 10.8 5.7 18.5 5.7s14.5-2.4 18.5-6.1Z"/>
+                </svg>`
+  },
+  {
+    name:   'Google Maps',
+    user:   'Maps Listing',
+    url:    'https://maps.app.goo.gl/BdegUTDX1ZGCAT4C6',
+    short:  'maps.google.com',
+    icon:   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+                  <path d="M0 0v200h200V0H0Zm100 173.6c-40.6 0-73.6-32.9-73.6-73.6s33-73.6 73.6-73.6 73.6 32.9 73.6 73.6-32.9 73.6-73.6 73.6Z"/>
+                  <path d="M115.9 49.3ZM100 54.2c-8.9 0-17 3.5-23.1 9.1l12.7 10.6 15.8-19.2c-1.8-.3-3.6-.5-5.4-.5Zm12.3 2.3L96.5 75.7c1.1-.3 2.3-.5 3.5-.5 7.1 0 12.9 5.8 12.9 12.9v.5l15.6-18.8c-3.9-6-9.5-10.7-16.3-13.3ZM75.8 61Zm-3.2 7.1c-4.1 5.6-6.5 12.5-6.5 20s.7 8.3 2 11.9l17.4-21.1-12.9-10.7Zm59.1 8-44.2 53c3.8 5.3 7.3 11.2 9.6 18.4.9 2.8 4.9 2.8 5.8 0 8.3-25.4 31-35 31-59.4s-.8-8.3-2.2-12ZM87.1 87 71 106.5c3.3 6 7.9 11.4 12.5 17.3l19.3-23.1c-.9.2-1.8.3-2.8.3-7.1 0-12.9-5.8-12.9-12.9V87Z"/>
+                </svg>`
+  }
+];
+socialNetworks.sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<BaseLayout title={title} description={description} permalink={permalink} current="contact">
+
+  <section>
+    <HeaderImage img="/assets/images/pr-sketch-devices.webp" title="Sketch of a desktop and mobile device and the link between them" />
+    <header>
+      <p>ProtoRebel on Social Media:</p>
+      <ul>
+        {socialNetworks.map((social) => (
+          <li>
+            <a href={social.url} title=`Visit ProtoRebel on ${social.name}` target="_blank">
+              <div class="icon" set:html={social.icon}></div>
+              <p>
+                <strong>{social.short}</strong>
+                <span>{social.user}</span>
+              </p>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <RotatingWords before="Are we a good fit for your" words={['Website', 'Software', 'Mobile app']} after="project?" />
+      <Forms formType="Fit" />
+    </header>
+    {sections.map((section) => (
+      <PageSection section={section} />
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+    header {
+        padding: 0 var(--pad-small);
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0 0 var(--pad) 0;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--pad-small);
+    }
+
+    li {
+        display: block;
+        width: 100%;
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        position: relative;
+        border: var(--border);
+        overflow: hidden;
+    }
+
+    a::before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--color-yellow);
+        transform: translateX(100%);
+        transition: var(--transition-hover);
+    }
+
+    a p {
+        position: relative;
+        padding: 0.5rem 1rem;
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition-hover);
+        line-height: 1;
+    }
+
+    strong {
+        text-transform: uppercase;
+        font-family: var(--font-family--deco);
+        font-size: 1.5em;
+    }
+
+    span {
+        font-size: 0.75em;
+        font-weight: var(--font-weight--bold);
+    }
+
+    .icon {
+        width: 5rem;
+        min-width: 5rem;
+        height: 5rem;
+        position: relative;
+
+        svg {
+            fill: var(--color-yellow);
+            transition: var(--transition-hover);
+
+            path,
+            circle {
+                transition: var(--transition-hover);
+            }
+        }
+    }
+
+    a:hover,
+    a:active,
+    a:focus {
+        &::before {
+            transform: translateX(0);
+        }
+
+        strong,
+        span {
+            color: var(--color-black);
+        }
+
+        svg path,
+        svg circle {
+            fill: var(--color-black);
+
+            &:first-child {
+                fill: var(--color-yellow);
+            }
+        }
+
+        p {
+            padding-left: 0;
+        }
+    }
+
+    @media (min-width: 960px) {
+        header {
+            padding: 0 var(--pad) 0 0;
+        }
+
+        li {
+            width: calc(50% - calc(var(--pad-small) * 0.5));
+        }
+    }
+
+    @media (min-width: 1800px) {
+
+        li {
+            width: calc(33% - calc(var(--pad-small) * 0.666));
+        }
+    }
+</style>

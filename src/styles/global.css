@@ -1,0 +1,185 @@
+@import 'variables.css';
+@import 'reset.css';
+
+html,
+body {
+	width: 100%;
+	max-width: 100%;
+	min-height: 100%;
+}
+
+html {
+	scroll-behavior: smooth;
+	text-rendering: optimizeLegibility;
+	font-size: var(--font-size);
+}
+
+body {
+	font-family: var(--font-family--default);
+	font-weight: var(--font-weight--regular);
+	color: var(--color-grey);
+	background-color: var(--color-black);
+	font-size: 1rem;
+	font-smoothing: antialiased;
+	letter-spacing: 0.075ex;
+}
+
+@media (min-width: 768px) {
+	body {
+		font-size: var(--font-size--bump);
+	}
+}
+
+@media (min-width: 960px) {
+	body {
+		font-size: var(--font-size--large);
+	}
+}
+
+main {
+	width: 100%;
+}
+
+::selection {
+	background: var(--color-yellow);
+	color: var(--color-black);
+}
+
+a {
+	color: var(--color-yellow);
+	text-decoration: none;
+}
+
+/** Heading Level Elements **/
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	display: block;
+	padding: 0;
+	margin: 0 0 0.5rem 0;
+	line-height: 1.25;
+	color: var(--color-white);
+}
+
+h1 {
+	font-size: 2.5em;
+	margin-bottom: 0.5em;
+}
+
+h2 {
+	font-size: 2em;
+	font-family: var(--font-family--serif);
+	text-transform: lowercase;
+	font-weight: var(--font-weight--bold);
+	font-style: italic;
+	color: var(--color-yellow);
+}
+
+h3 {
+	font-size: 1.5em;
+	text-transform: lowercase;
+}
+
+h4 {
+	font-size: 1.25em;
+	font-style: italic;
+	margin-bottom: 1em;
+}
+
+h5 {
+	font-size: 1em;
+	margin-bottom: 1em;
+	text-transform: uppercase;
+}
+
+h6 {
+	font-size: 1em;
+	margin-bottom: 1em;
+	text-transform: uppercase;
+	letter-spacing: 0.25em;
+}
+
+/** List Level Elements **/
+ul,
+ol {
+	margin: 0 0 1.5em 1.5em;
+	padding: 0;
+}
+
+ul li,
+ol li {
+	margin-bottom: 0.25em;
+	line-height: 1.5em;
+}
+
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+	margin: 0 0 0 2em
+}
+
+ul {
+	list-style-type: disc;
+}
+
+ol {
+	list-style-type: decimal;
+}
+
+/** Paragraph Level Elements **/
+p,
+address {
+	margin: 0;
+	padding: 0 0 1.5em 0;
+	line-height: 1.5em;
+}
+
+/**
+  Inline Level Elements
+  ---------------------------------------------------------------------- */
+strong {
+	font-weight: bold;
+}
+
+p strong,
+li strong {
+	color: var(--color-white);
+	text-transform: lowercase;
+}
+
+em {
+	font-style: italic;
+}
+
+small {
+	font-size: 0.75em;
+}
+
+sup {
+	line-height: 1;
+	font-size: 0.65em;
+	vertical-align: super;
+}
+
+sub {
+	line-height: 1;
+	font-size: 0.65em;
+	vertical-align: sub;
+}
+
+/**
+  Responsive Elements
+  ---------------------------------------------------------------------- */
+img,
+video {
+	max-width: 100%;
+	height: auto;
+}
+
+/**
+  Animations
+  ---------------------------------------------------------------------- */

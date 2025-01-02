@@ -1,0 +1,29 @@
+---
+const { current = '' } = Astro.props;
+---
+
+<a href="/">
+  <img alt="Logo for ProtoRebel, LLC" src="/assets/images/pr-logo-white.svg" width="226" height="40" class={current} />
+</a>
+
+<style>
+    img {
+        position: relative;
+        z-index: 60;
+        display: block;
+        width: 100%;
+        height: 3rem;
+        object-fit: contain;
+        margin: 0 auto;
+        transition: var(--transition-grow);
+        box-sizing: border-box;
+    }
+
+    @media (min-width: 960px) {
+        img {
+            object-position: right center;
+            width: calc(100% - var(--pad));
+            margin: 0 auto 0 0;
+        }
+    }
+</style>

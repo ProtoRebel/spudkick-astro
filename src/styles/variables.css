@@ -1,0 +1,139 @@
+@font-face {
+    font-family: 'Bebas Neue';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/BebasNeue-Regular.ttf')
+    format('truetype');
+}
+
+@font-face {
+    font-family: 'Cormorant';
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/fonts/Cormorant-BoldItalic.ttf')
+    format('truetype');
+}
+
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/fonts/Outfit-Bold.ttf')
+    format('truetype');
+}
+
+@font-face {
+    font-family: 'Outfit';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('/fonts/Outfit-Regular.ttf')
+    format('truetype');
+}
+
+:root {
+
+    /** Screens **/
+    --screen-mobile: 767px;
+    --screen-tablet: 768px;
+    --screen-desktop: 1024px;
+
+    /** Layout **/
+    --layout-max: 1270px;
+    --layout-max--reading: 820px;
+    --layout-header--mobile: 80px;
+    --layout-header--desktop: 200px;
+
+    --pad: 4rem;
+    --pad-small: 2rem;
+
+    /* Colors */
+    --color-black: #000;
+    --color-black--trans: rgba(0,0,0,0.75);
+    --color-grey: #999;
+    --color-grey--light: #a6a6a6;
+    --color-white: #fff;
+    --color-white--trans: rgba(255,255,255,0.1);
+    --color-yellow: #fab800;
+    --color-red: #e24000;
+    --color-blue: #0f7ac1;
+
+    /** Typography **/
+    --font-family--default: 'Outfit', sans-serif;
+    --font-family--serif: 'Cormorant', serif;
+    --font-family--deco: 'Bebas Neue', sans-serif;
+
+    --font-size: 16px;
+    --font-size--bump: 18px;
+    --font-size--large: 20px;
+    --font-size--huge: 30px;
+
+    --font-weight--regular: 400;
+    --font-weight--bold: 700;
+
+    /** Transitions **/
+    --transition-hover: all 350ms cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-grow: all 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-move: all 1s cubic-bezier(0.5, 1, 0.89, 1);
+
+    /** Borders **/
+    --border: 1px solid var(--color-yellow);
+
+    /** Fields, Inputs, Buttons **/
+    --field-layout--padding: 5px 10px;
+    --field-layout--width: 100%;
+    --field-layout--width-max: 350px;
+    --field-layout--height: 4em;
+    --field-layout--gutter: 20px;
+
+    --field-style--background: var(--color-white);
+    --field-style--background-hover: var(--field-style--background);
+    --field-style--background-focus: var(--field-style--background);
+    --field-style--background-disabled: var(--field-style--background);
+    --field-style--border: var(--border);
+    --field-style--border-hover: var(--field-style--border);
+    --field-style--border-focus: var(--field-style--border);
+    --field-style--border-disabled: var(--field-style--border);
+    --field-style--radius: 0;
+
+    --field-font--family: var(--font-family--default);
+    --field-font--size: var(--font-size);
+    --field-font--weight: regular;
+    --field-font--color: var(--color-black);
+    --field-font--color-hover: var(--field-font--color);
+    --field-font--color-focus: var(--field-font--color);
+    --field-font--color-disabled: var(--field-font--color);
+
+    --field-label--margin: 5px;
+    --field-label--size: var(--font-size);
+    --field-label--weight: regular;
+    --field-label--color: var(--color-black);
+
+    --field-check--border: var(--field-style--border);
+    --field-check--size: 20px;
+    --field-check--icon: '\2713';
+    --field-check--icon-size: var(--font-size--large);
+
+    --field-button--width: 100%;
+    --field-button--width-max: 300px;
+    --field-button--height: var(--field-layout--height);
+    --field-button--padding: 5px 20px;
+    --field-button--background: var(--color-black);
+    --field-button--background-hover: var(--field-button--background);
+    --field-button--background-focus: var(--field-button--background);
+    --field-button--background-disabled: var(--field-button--background-focus);
+    --field-button--font-color: var(--color-white);
+    --field-button--font-color-hover: var(--field-button--font-color);
+    --field-button--font-color-focus: var(--field-button--font-color);
+    --field-button--font-color-disabled: var(--field-button--font-color);
+    --field-button--font-size: var(--font-size);
+    --field-button--font-family: var(--font-family--default);
+    --field-button--border: var(--border);
+    --field-button--border-hover: var(--field-button--border);
+    --field-button--border-focus: var(--field-button--border);
+    --field-button--border-disabled: var(--field-button--border);
+    --field-button--radius: 0;
+}

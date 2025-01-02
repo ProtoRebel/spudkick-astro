@@ -1,0 +1,33 @@
+<video class="video-backing" width="300" height="300" preload="none" autoplay muted loop webkit-playsinline playsinline poster="/assets/images/pr-static-glitch-poster.webp">
+  <source src="/assets/video/pr-static-glitch-optimized.mp4" type="video/mp4">
+</video>
+
+<script>
+    document.addEventListener('astro:before-start', () => {
+      const videos = document.querySelectorAll('.video-backing');
+      videos.forEach((video) => {
+        video.pause();
+      });
+    });
+
+    document.addEventListener('astro:page-load', () => {
+      const videos = document.querySelectorAll('.video-backing');
+      videos.forEach((video) => {
+        video.play();
+      });
+    });
+</script>
+
+<style>
+    video {
+        pointer-events: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center center;
+        z-index: 0;
+    }
+</style>
