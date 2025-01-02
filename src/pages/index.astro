@@ -1,61 +1,13 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ValueProposition from '../components/ValuePropSlideshow.astro';
-import PageSection from '../components/PageSection.astro';
+import LayoutDefault from '../layouts/LayoutDefault.astro';
 
 const title = 'Fat-Free Websites & Software Solutions';
 const description = 'ProtoRebel specializes in sleek, efficient websites and software. We help bring challenging ideas to life for businesses beyond conventional marketing.';
 const permalink = Astro.site.href;
-const sections = [
-  {
-    title:      'What Happens',
-    photo:      '/assets/images/heading-circuits.webp',
-    listType:   'ordered',
-    list: [
-      ['Identify & penetrate your market'],
-      ['Design & build your website/software'],
-      ['Be as involved as you’d like'],
-      ['Launch website/software'],
-      ['Managed + maintained with unlimited changes']
-    ],
-    quote:      'See the Work',
-    buttonLink: '/portfolio',
-    button:     'Portfolio'
-  },
-  {
-    title:      'Pricing',
-    photo:      '/assets/images/heading-heatsync.webp',
-    listType:   'unordered',
-    list: [
-      ['Start your website for $750'],
-      ['Build only what you need'],
-      ['Pay your software/website over the next 3 years'],
-      ['Free hosting while you pay off your website']
-    ],
-    quote:      'Estimate budget and timeline',
-    buttonLink: '/contact',
-    button:     'Get Started'
-  },
-  {
-    title:      'Qualifications',
-    photo:      '/assets/images/heading-tines.webp',
-    listType:   'unordered',
-    list: [
-      ['20+ years of professional industry experience'],
-      ['Extensive experience in startups'],
-      ['Applying principles of startups to established businesses'],
-      ['Long history of successful software still in use, built from the ground-up'],
-      ['No one-size-fits-all solutions: your website/software is made to work best for you']
-    ],
-    quote:      'History and details',
-    buttonLink: '/about',
-    button:     'Learn More'
-  }
-];
+const sections: string[] = ['butt', 'milk'];
 ---
 
-<BaseLayout title={title} description={description} permalink={permalink} current="home">
-  <ValueProposition />
+<LayoutDefault title={title} description={description} permalink={permalink} current="home">
   <section>
     <p>
             ProtoRebel specializes in “fat-free” websites and software.
@@ -69,26 +21,10 @@ const sections = [
     </p>
   </section>
   {sections.map((section) => (
-    <PageSection section={section} />
+    <p>{section}</p>
   ))}
-</BaseLayout>
+</LayoutDefault>
 
-<style lang="postcss">
-    section {
-        padding: var(--pad-small);
-        background-color: var(--color-black);
-        max-width: var(--layout-max--reading);
-    }
+<style>
 
-    p {
-        margin: var(--pad-small) 0;
-        padding: 0;
-    }
-
-    @media (min-width: 960px) {
-        section {
-            padding: var(--pad-small) var(--pad) var(--pad-small) 0;
-
-        }
-    }
 </style>

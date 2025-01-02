@@ -1,5 +1,4 @@
 ---
-import VideoBrand from './VideoBrand.astro';
 import { getBusinessInfo } from '../utils/getBusinessInfo';
 
 const phoneClean = getBusinessInfo('phone').replace(/\D/g, '');
@@ -10,7 +9,6 @@ const phoneClean = getBusinessInfo('phone').replace(/\D/g, '');
   <p class="address">{getBusinessInfo('address')}</p>
   <p class="copyright">&copy; {new Date().getFullYear()} {getBusinessInfo('name')}</p>
 </footer>
-<VideoBrand />
 
 <style>
   footer {

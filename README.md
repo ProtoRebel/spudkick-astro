@@ -1,10 +1,6 @@
 # ProtoRebel, LLC
 
-Based on the [Charca/Astro Blog Template](https://github.com/Charca/astro-blog-template) 
-
-```
-npm init astro -- --template Charca/astro-blog-template
-```
+Based on the [Charca/Astro Blog Template](https://github.com/Charca/astro-blog-template)
 
 ## Features
 
@@ -39,9 +35,25 @@ Inside of your Astro project, you'll see the following folders and files:
 │   ├── opengraph.jpg
 │   └── robots.txt
 ├── src/
-│   ├── components/
+│   ├── blocks/
+│   │   ├── Footer.astro
+│   │   └── Header.astro
+│   ├── layouts/
+│   │   ├── LayoutDefault.astro
+│   │   └── LayoutMaintenance.astro
+│   ├── pages/
+│   │   ├── blog/
+│   │   ├── portfolio/
+│   │   ├── 404.astro
+│   │   ├── about.astro
+│   │   ├── contact.astro
+│   │   ├── index.astro
+│   │   └── signature.astro
+│   ├── partials/
 │   │   └── Tour.astro
-│   └── pages/
+│   ├── styles/
+│   │   └── Tour.astro
+│   └── utils/
 │       └── index.astro
 └── package.json
 ```

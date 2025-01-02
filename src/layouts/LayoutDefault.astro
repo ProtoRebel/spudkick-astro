@@ -1,0 +1,33 @@
+---
+import Head from '../partials/Head.astro';
+import Header from '../blocks/Header.astro';
+import Footer from '../blocks/Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  permalink: string;
+  current?: string;
+}
+const { title, description, permalink, current, openGraph } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <Head title={title} description={description} permalink={permalink} openGraph={openGraph} />
+  </head>
+  <body>
+    <div class=`layout layout-${current}`>
+      <Header current={current} />
+      <main>
+        <article>
+          <slot />
+        </article>
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>
+
+<style>
+
+</style>
