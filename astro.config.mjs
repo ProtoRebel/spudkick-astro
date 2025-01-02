@@ -9,6 +9,7 @@ import sitemap from '@astrojs/sitemap'
 export default defineConfig({
   site: 'https://spudkick.protorebel.com',
   integrations: [mdx(),sitemap()],
+  output: 'static',
   markdown: {
     shikiConfig: {
       theme: 'nord',

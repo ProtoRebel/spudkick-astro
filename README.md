@@ -11,10 +11,13 @@ npm init astro -- --template Charca/astro-blog-template
 - ✅ Astro 5.1.1
 - ✅ PostCSS Support in Globals (not templates)
 - ✅ ESLint + Editor Config
+- ✅ HTML Email Signature Generator
 - ✅ Full Markdown support
 - ✅ SEO-friendly setup with canonical URLs and OpenGraph data
 - ✅ RSS 2.0 generation
 - ✅ Sitemap.xml generation
+- ✅ 404 Page Support for Apache Hosting
+- ✅ .htaccess optimization with gzip, force https, and expires
 
 ## Project Structure
 
