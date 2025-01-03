@@ -47,7 +47,11 @@ Inside of the project, you'll see the following folders and files:
 │   │   └── LayoutMaintenance.astro
 │   ├── pages/
 │   │   ├── blog/
+│   │   │   ├── [slug].astro
+│   │   │   └── index.astro
 │   │   ├── portfolio/
+│   │   │   ├── [slug].astro
+│   │   │   └── index.astro
 │   │   ├── 404.astro
 │   │   ├── about.astro
 │   │   ├── contact.astro
@@ -63,7 +67,10 @@ Inside of the project, you'll see the following folders and files:
 │   │   ├── reset.css
 │   │   └── variables.css
 │   └── utils/
-│       └── index.astro
+│       ├── getBlogData.ts
+│       ├── getBusinessInfo.ts
+│       ├── getPortfolioData.ts
+│       └── getSocial.ts
 └── package.json
 ```
 
