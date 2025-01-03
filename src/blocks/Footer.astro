@@ -1,7 +1,9 @@
 ---
 import { getBusinessInfo } from '../utils/getBusinessInfo';
+import { getSocial } from '../utils/getSocial';
 
-const phoneClean = getBusinessInfo('phone').replace(/\D/g, '');
+const phoneClean = getBusinessInfo('phone', 'clean');
+
 ---
 
 <footer>

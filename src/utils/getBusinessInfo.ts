@@ -1,17 +1,52 @@
+interface BusinessName {
+  default: string;
+  legal: string;
+  short: string;
+}
+
 interface BusinessInfo {
-    name: string;
-    address: string;
-    email: string;
-    phone: string;
+  name: BusinessName;
+  address: string;
+  email: string;
+  phone: string;
 }
 
 const businessInfo: BusinessInfo = {
-  name: 'ProtoRebel, LLC',
+  name: {
+    default: 'ProtoRebel',
+    legal: 'ProtoRebel, LLC',
+    short: 'PR',
+  },
   address: 'Boise, Idaho, United States',
   email: 'support@protorebel.com',
-  phone: '208.654.1004',
+  phone: '(208) 654-1004',
 };
 
-export function getBusinessInfo(infoType: keyof BusinessInfo): string {
-  return businessInfo[infoType] || 'N/A';
+type Modifier = 'clean' | 'legal' | 'short';
+
+export function getBusinessInfo(
+  infoType: keyof BusinessInfo,
+  modifier?: Modifier
+): string {
+  const value = businessInfo[infoType];
+
+  if (infoType === 'name') {
+    const nameValue = value as BusinessName;
+    if (modifier === 'legal') {
+      return nameValue.legal;
+    }
+    if (modifier === 'short') {
+      return nameValue.short;
+    }
+    return nameValue.default;
+  }
+
+  if (typeof value === 'string') {
+    if (modifier === 'clean' && infoType === 'phone') {
+      return value.replace(/[^0-9]/g, '');
+    }
+    return value;
+  }
+
+  return '';
 }
