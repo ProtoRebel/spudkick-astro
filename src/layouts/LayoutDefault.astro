@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
 import Head from '../partials/Head.astro';
 import Header from '../blocks/Header.astro';
 import Footer from '../blocks/Footer.astro';
@@ -14,6 +15,7 @@ const { title, description, permalink, current, openGraph } = Astro.props;
 <html lang="en">
   <head>
     <Head title={title} description={description} permalink={permalink} openGraph={openGraph} />
+    <ViewTransitions />
   </head>
   <body>
     <div class=`layout layout-${current}`>
