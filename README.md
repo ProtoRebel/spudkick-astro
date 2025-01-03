@@ -1,3 +1,5 @@
+![Photo of a space potato for the Astro Starter Theme, SpudKick](/Users/dustinjones/Desktop/PROJECTS/SpudKick/spudkick-astro/screenshot.jpg "Space Potato")
+
 # SpudKick
 An Astro starter framework by [ProtoRebel, LLC](https://protorebel.com).
 Based on the [Charca/Astro Blog Template](https://github.com/Charca/astro-blog-template)
@@ -52,9 +54,14 @@ Inside of the project, you'll see the following folders and files:
 │   │   ├── index.astro
 │   │   └── signature.astro
 │   ├── partials/
-│   │   └── Tour.astro
+│   │   ├── Button.astro
+│   │   ├── Head.astro
+│   │   ├── Logo.astro
+│   │   └── Nav.astro
 │   ├── styles/
-│   │   └── Tour.astro
+│   │   ├── global.css
+│   │   ├── reset.css
+│   │   └── variables.css
 │   └── utils/
 │       └── index.astro
 └── package.json
