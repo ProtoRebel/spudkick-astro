@@ -1,9 +1,6 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import LayoutDefault from '../../layouts/LayoutDefault.astro';
 import getPostData from '../../utils/getBlogData';
-import RotatingWords from '../../components/RotatingWords.astro';
-import Forms from '../../components/Forms.astro';
-import VideoBacking from '../../components/VideoBacking.astro';
 
 export async function getStaticPaths() {
   const posts = await import.meta.glob('../../../data/blog/*.md', { eager: true });
@@ -18,46 +15,17 @@ export async function getStaticPaths() {
 }
 
 const { Content, frontmatter } = Astro.props.post;
-const { title, subTitle, description, publishDate, featuredImage, cta } = frontmatter;
+const { title, description, featuredImage} = frontmatter;
 const { slug, readingTime } = getPostData(Astro.props.post);
 const permalink = `${Astro.site.href}blog/${slug}`;
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  permalink={permalink}
-  openGraph={`${Astro.site.href}assets/blog/${featuredImage.img}`}
-  current="blog"
->
-  <header class="image">
-    <VideoBacking />
-    <img
-      src={`/assets/blog/${featuredImage.img}`}
-      width="1600"
-      height="900"
-      alt={featuredImage.title}
-    />
-  </header>
-  <article>
-    <header>
-      <h1>
-        {title}
-        <span>{subTitle}</span>
-      </h1>
-      <p>Published {publishDate} &bull; {readingTime}</p>
-    </header>
+<LayoutDefault title={title} description={description} permalink={permalink} openGraph={`${Astro.site.href}assets/blog/${featuredImage.img}`} current="blog">
+  <section>
+    <p>Blog article content for {title}</p>
     <Content />
-  </article>
-  <footer>
-    <RotatingWords
-      before={cta.before}
-      words={cta.words}
-      after={cta.after}
-    />
-    <Forms formType="Consult" />
-  </footer>
-</BaseLayout>
+  </section>
+</LayoutDefault>
 
 <style>
 	.image {

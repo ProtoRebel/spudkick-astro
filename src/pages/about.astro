@@ -1,150 +1,19 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import Button from '../components/Button.astro';
-import PageSection from '../components/PageSection.astro';
-import HeaderImage from '../components/HeaderImage.astro';
-import RotatingWords from '../components/RotatingWords.astro';
-import Forms from '../components/Forms.astro';
+import LayoutDefault from '../layouts/LayoutDefault.astro';
 
-const title = 'Software & Web Design, Development, and Management | Boise, Idaho';
-const description = 'ProtoRebel is a US-based agency from Boise, Idaho, specializing in software, app, and web design. Pricing and timelines for websites and software.';
-const permalink = `${Astro.site.href}about`;
-const sections = [
-  {
-    title:      'Here’s the process',
-    photo:      '/assets/images/heading-shroud-timebudget.webp',
-    listType:   'ordered',
-    list: [
-      ['Investigate what you currently have'],
-      ['Check out what your closest competition is doing'],
-      ['Identify your unique market placement'],
-      ['Wireframes and roadmap for how to get your idea to market'],
-      ['High fidelity designs and development effort estimated'],
-      ['First version of website/software developed'],
-      ['Intensive software/website testing'],
-      ['Launch to the world and collect user data as you go'],
-      ['Software maintained and kept up to date by ProtoRebel with unlimited content changes']
-    ],
-    quote:      'That\'s about it! Simple, right? Sure feels that way when you’re looking at some list on a website, but there\'s a lot that goes into each of these critical steps.',
-    buttonLink: '/contact',
-    button:     'Get Started'
-  },
-  {
-    title:      'Bottom-lining it',
-    photo:      '/assets/images/heading-heatsync.webp',
-    listType:   'ordered',
-    list: [
-      ['You pay $750 to initiate the process', [
-        'Dive deep into current thinking and any assets you have',
-        'Comprehensive competitive research',
-        'Value proposition and roadmap for development',
-        'Wireframes and some high fidelity designs to illustrate the wireframes and align on a direction',
-        'Rough estimate of development cost based on roadmap'
-      ]],
-      ['You pay 10% of development estimate to start', [
-        'The $750 and 10% down both go towards your overall project cost',
-        'We stick to your roadmap so there\'s no surprises in cost, BUT if you want more or different things, we can pivot and the final price will be adjusted',
-        'We rigorously test your software/website before handing off to you to do another round of intensive testing',
-        'After testing is done, we launch to the world!'
-      ]],
-      ['Hosting & Payment', [
-        'The development cost is calculated from the hours spent designing, developing, and testing',
-        'Your $750 and 10% down is deducted from the total cost and this is your balance',
-        'The balance is divided up into 36 even, monthly installments, no interest or any other quackery – simple, automated payments',
-        'Monthly payments can be as low as $150 and up to $500 for more robust software',
-        'You can pay off your software/website at anytime for a 10% discount of your remaining balance',
-        'Hosting is free (usually $27/mo) while you pay off your development tab – that\'s 3 years of free hosting'
-      ]],
-      ['Maintenance & Unlimited Changes', [
-        'Your software and the servers hosting your software need to be tended to for security and performance purposes and ProtoRebel takes this worry off your plate with routine backup and update practices',
-        'Changing any text, photos, and videos is crucial to keep your visitors engaged – also you might just think of a better way to say something, add a new staff member, or write an exceptional blog post. Because these directly contribute to your website success, we do these things at no cost to you with a one week or less turnaround time',
-        'Sometimes you need to expand features, design something new, or upgrade your website in ways that are more than swapping out some media or text – this is ok! We can do a change order to get you what you need in a timely manner. This can add onto your remaining balance, or pay in one lump sum to get the 10% discount'
-      ]],
-      ['And then?', [
-        'After you pay off your website/software your monthly payment drops down to only pay for monthly hosting (usually $27/mo)',
-        'ProtoRebel continues to maintain your software updates and backups',
-        'You still get free, unlimited updates to photos, text, and videos while you’re on a monthly hosting plan',
-        'Websites have a shelf life of 3-5 years while they’re relevant in both design and service offerings – some can even go much longer – so after this term it’s about time to discuss a new design, new service offering, and a new way to thwart your competitors'
-      ]],
-    ],
-  }
-];
+const title = 'About the Astro Starter Theme, SpudKick';
+const description = '';
+const permalink = Astro.site.href;
 ---
 
-<BaseLayout title={title} description={description} permalink={permalink} current="about">
-  <HeaderImage img="/assets/images/pr-sketch-bigbang.webp" title="Sketch representing the big bang" />
+<LayoutDefault title={title} description={description} permalink={permalink} current="about">
   <section>
-    <div class="column">
-      <p>
-        Dustin Jones founded ProtoRebel in 2024, drawing on his experience managing development teams and creating efficient project management processes.
-        He began by building simple websites and designing graphics, then shifted to UX Design, where his passion for startups grew.
-        This led him to Product Management, ultimately inspiring the creation of ProtoRebel; a company backed by a cadre of exceptional designers and developers that deliver stellar products and results.
-        If you want to know more about Dustin and his experience, visit his online portfolio.
-      </p>
-      <Button url="https://domesticjones.com/" title="Dustin's Portfolio" target="_blank" />
-    </div>
-    <div class="column">
-      <p>
-        Websites and software can feel like a burden—just another thing to manage and an unknown and expensive terrain to traverse.
-        Many agencies push rigid, cookie-cutter solutions that require too much involvement (you’ve got a business to run), or offer boutique solutions that cost you $$$ without much to the bottom line.
-        You deserve the right solution, not some prepackaged offer.
-      </p>
-      <p>
-        Lean startup principles should apply at all business levels, especially when it comes to software.
-        While good software and websites are often expensive, they can significantly impact growth and market positioning.
-        Software also needs ongoing maintenance, and it’s best to have the creator handle updates so you can trust it works without worrying.
-        Unfortunately, these assurances are hard to come by in traditional design and development agreements.
-      </p>
-      <p>
-        ProtoRebel handles end-to-end services for software and websites, picking up wherever you’re at and guiding you to the finish line.
-        We focus on what is possible within your budget and timeline and get you something working with a plan for the future.
-      </p>
-    </div>
+    <p>
+      Why the name?
+    </p>
   </section>
-  {sections.map((section) => (
-    <PageSection section={section} />
-  ))}
-  <footer>
-    <RotatingWords before="Ask a" words={['Designer', 'Developer', 'Manager']} after="a question" />
-    <Forms formType="Question" />
-  </footer>
-</BaseLayout>
+</LayoutDefault>
 
 <style>
-  section {
-    padding: 0 var(--pad-small);
-    background-color: var(--color-black);
-  }
 
-  .column {
-    margin-bottom: var(--pad-small);
-    max-width: var(--layout-max--reading);
-  }
-
-  .column p:last-child {
-    padding: 0;
-    margin: 0;
-  }
-
-  footer {
-    padding: 0 var(--pad-small);
-  }
-
-  @media (min-width: 960px) {
-    section {
-      padding-left: 0;
-      padding-top: 0;
-      display: flex;
-      justify-content: space-between;
-      gap: var(--pad-small);
-    }
-
-    .column {
-      width: 50%;
-    }
-
-    footer {
-      padding: 0 var(--pad) 0 0;
-    }
-  }
 </style>

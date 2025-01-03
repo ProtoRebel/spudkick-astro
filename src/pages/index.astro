@@ -1,28 +1,17 @@
 ---
 import LayoutDefault from '../layouts/LayoutDefault.astro';
 
-const title = 'Fat-Free Websites & Software Solutions';
-const description = 'ProtoRebel specializes in sleek, efficient websites and software. We help bring challenging ideas to life for businesses beyond conventional marketing.';
+const title = 'SpudKick: Astro Starter Theme';
+const description = 'A super lean, performant, and helpful Astro Theme ready to jump in any direction.';
 const permalink = Astro.site.href;
-const sections: string[] = ['butt', 'milk'];
 ---
 
 <LayoutDefault title={title} description={description} permalink={permalink} current="home">
   <section>
     <p>
-            ProtoRebel specializes in “fat-free” websites and software.
-            Imagine a digital diet &mdash; no bloat, no unnecessary extras, just the essentials.
-            The goal is a sleek, efficient, and effective digital presence.
-            You can engage as much or as little as desired with flexible payment options.
-    </p>
-    <p>
-            We specialize in working with people and businesses that offer products and services that
-            don’t fit with conventional advertising, marketing, and digital services companies.
+      Page content goes here
     </p>
   </section>
-  {sections.map((section) => (
-    <p>{section}</p>
-  ))}
 </LayoutDefault>
 
 <style>

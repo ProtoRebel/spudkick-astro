@@ -7,58 +7,13 @@ const phoneClean = getBusinessInfo('phone').replace(/\D/g, '');
 <footer>
   <p class="phone">{getBusinessInfo('phone')} &bull; <a href=`tel:${phoneClean}`>Call</a> &bull; <a href=`sms:${phoneClean}`>Text</a></p>
   <p class="address">{getBusinessInfo('address')}</p>
-  <p class="copyright">&copy; {new Date().getFullYear()} {getBusinessInfo('name')}</p>
+  <p class="copyright">&copy; <span id="copyright-year"></span> {getBusinessInfo('name')}</p>
 </footer>
 
+<script>
+  document.getElementById('copyright-year').textContent = new Date().getFullYear();
+</script>
+
 <style>
-  footer {
-      position: relative;
-      padding: var(--pad) var(--pad-small);
-      z-index: 1;
-  }
 
-  footer p {
-      padding: 0;
-      font-size: 0.85em;
-      color: var(--color-white);
-      line-height: 2;
-  }
-
-  a {
-      color: var(--color-yellow);
-      transition: var(--transition-hover);
-  }
-
-  a:hover {
-      color: var(--color-white);
-  }
-
-  a:active,
-  a:focus {
-      color: var(--color-grey--light);
-  }
-
-  @media (min-width: 960px) {
-      footer {
-          display: flex;
-          justify-content: space-between;
-          padding-left: 0;
-          padding-right: var(--pad);
-          text-transform: lowercase;
-          font-size: 0.75em;
-      }
-  }
-
-
-  @media (min-width: 1120px) {
-      footer {
-          font-size: 0.85em;
-      }
-  }
-
-  @media (min-width: 1260px) {
-      footer {
-          font-size: 1em;
-      }
-  }
 </style>

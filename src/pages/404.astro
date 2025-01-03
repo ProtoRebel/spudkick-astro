@@ -1,14 +1,25 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import LayoutDefault from '../layouts/LayoutDefault.astro';
 
 const title = 'Page not found';
-const description = 'ProtoRebel specializes in sleek, efficient websites and software. We help bring challenging ideas to life for businesses beyond conventional marketing.';
+const description = 'We cannot find the page you\'re looking for.';
 const permalink = Astro.site.href;
 ---
 
-<BaseLayout title={title} description={description} permalink={permalink} current="home">
-  <section>Pag enot found</section>
-</BaseLayout>
+<LayoutDefault title={title} description={description} permalink={permalink} current="about">
+  <section>
+    <p>
+      404 Not Found
+    </p>
+    <p>
+      <span id="current-url"></span>
+    </p>
+  </section>
+  <script>
+    document.getElementById('current-url').textContent = window.location.href;
+  </script>
+</LayoutDefault>
 
 <style>
+
 </style>
