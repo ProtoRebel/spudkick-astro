@@ -7,6 +7,7 @@ interface BusinessName {
 interface BusinessInfo {
   name: BusinessName;
   address: string;
+  year: number;
   email: string;
   phone: string;
 }
@@ -19,10 +20,11 @@ const businessInfo: BusinessInfo = {
   },
   address: 'Boise, Idaho, United States',
   email: 'support@protorebel.com',
+  year: 2024,
   phone: '(208) 654-1004',
 };
 
-type Modifier = 'clean' | 'legal' | 'short';
+type Modifier = 'clean' | 'legal' | 'short' | 'length';
 
 export function getBusinessInfo(
   infoType: keyof BusinessInfo,
@@ -39,6 +41,15 @@ export function getBusinessInfo(
       return nameValue.short;
     }
     return nameValue.default;
+  }
+
+  if (infoType === 'year') {
+    if (modifier === 'length') {
+      const currentYear = new Date().getFullYear();
+      const yearsInBusiness = currentYear - value;
+      return `${yearsInBusiness} ${yearsInBusiness === 1 ? 'year' : 'years'}`;
+    }
+    return value.toString(); // Return the start year as a string
   }
 
   if (typeof value === 'string') {
