@@ -1,0 +1,92 @@
+{
+  "$ref": "#/definitions/work",
+  "definitions": {
+    "work": {
+      "type": "object",
+      "properties": {
+        "client": {
+          "type": "string"
+        },
+        "tagline": {
+          "type": "string"
+        },
+        "affiliate": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "searchTerm": {
+          "type": "string"
+        },
+        "searchLink": {
+          "type": "string"
+        },
+        "launchDate": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        },
+        "imgPath": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "emblem": {
+          "type": "string"
+        },
+        "photoFeatured": {
+          "type": "string"
+        },
+        "photos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "img": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "size": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "img",
+              "title",
+              "size"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "draft": {
+          "type": "boolean",
+          "default": false
+        },
+        "$schema": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "client",
+        "tagline",
+        "affiliate",
+        "searchTerm",
+        "searchLink",
+        "launchDate",
+        "scope",
+        "imgPath",
+        "logo",
+        "emblem",
+        "photoFeatured",
+        "photos"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

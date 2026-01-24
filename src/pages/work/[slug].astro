@@ -1,0 +1,206 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../../layouts/Page.astro';
+import Button from "../../partials/Button.astro";
+import RotatingWords from "../../partials/RotatingWords.astro";
+
+export async function getStaticPaths() {
+  const workEntries = await getCollection('work');
+
+  return workEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const workImgPath = entry.data.imgPath;
+const workSlug = entry.id.split('.')[0];
+
+const title = `Our Work: ${entry.data.client}`;
+const description = `${entry.data.tagline} &mdash; ${entry.data.scope}`;
+const permalink = new URL(`work/${workSlug}`, Astro.site).toString();
+---
+
+<Page title={title} description={description} permalink={permalink} current="work">
+  <article>
+    <header transition:name=`work-header-${workSlug}`>
+      <div class="brand">
+        <img
+          src=`${workImgPath + entry.data.photoFeatured}`
+          width="960"
+          height="720"
+          class="featured"
+          transition:name=`work-featured-${workSlug}`
+        />
+        <img
+          src=`${workImgPath + entry.data.logo}`
+          width="192"
+          height="108"
+          class="logo"
+          alt={`${entry.data.client} logo`}
+          transition:name=`work-logo-${workSlug}`
+        />
+      </div>
+      <h1 class="reader-only" transition:name=`work-title-${workSlug}`>
+        {entry.data.client}
+      </h1>
+      <section>
+        <p class="meta">
+          <span class="tag">
+            {entry.data.tagline}
+          </span>
+          <span class="launch">
+            <strong>Launched:</strong> {entry.data.launchDate}
+            {entry.data.affiliate !== 'none' && `with ${entry.data.affiliate}`}
+          </span>
+          <span class="scope">
+            <strong>What We Did:</strong> {entry.data.scope}
+          </span>
+          <span class="link">
+            <a href=`https://${entry.data.searchLink}` target="_blank">
+              Visit {entry.data.client}
+            </a>
+            &mdash;
+            {entry.data.searchLink}, {entry.data.searchTerm}
+          </span>
+        </p>
+      </section>
+    </header>
+
+    <section>
+      <Content />
+    </section>
+
+    <section id="photos">
+      {entry.data.photos.map((photo) => (
+        <a href=`https://${entry.data.searchLink}` class={photo.size} target="_blank">
+          <img
+            src=`${workImgPath}${photo.img}`
+            class={photo.size}
+          />
+        </a>
+      ))}
+    </section>
+
+    <section>
+      <hr class="bottom" />
+    </section>
+
+    <section id="cta">
+      <RotatingWords before="Identify your" words={["website","software","webapp"]} after="challenges & features" />
+      <Button url="#schedule" title="Let's Talk" />
+    </section>
+
+  </article>
+</Page>
+
+<style>
+  article {
+    padding: var(--pad);
+    max-width: var(--layout-max--reading);
+  }
+
+  .brand {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .logo {
+    display: block;
+    width: 100%;
+  }
+
+  .featured {
+    object-fit: contain;
+  }
+
+  .meta {
+    line-height: 1.35;
+
+    .tag {
+      font-size: var(--font-size--large);
+      text-transform: lowercase;
+      color: var(--color-white);
+      margin-bottom: var(--pad);
+    }
+
+    span {
+      display: block;
+      font-size: 0.75em;
+      margin: var(--pad-half) 0;
+
+      strong {
+        color: var(--color-yellow);
+        text-transform: lowercase;
+        font-style: italic;
+        font-family: var(--font-family--serif);
+        font-size: var(--font-size--bump);
+      }
+    }
+
+    a {
+      font-weight: var(--font-weight--bold);
+      color: var(--color-white);
+      text-transform: lowercase;
+    }
+
+    .link {
+      margin-top: 0.25rem;
+    }
+  }
+
+  .bottom {
+    margin: var(--pad-quad) auto;
+  }
+
+  #photos {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-bottom: var(--pad-quad);
+    gap: var(--pad);
+
+    img,
+    a {
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .full {
+    width: 100%;
+  }
+
+  .half {
+    width: calc(50% - var(--pad-half));
+  }
+
+  #cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--pad-quad);
+  }
+
+  @media (min-width: 960px) {
+    .brand {
+      flex-direction: row-reverse;
+
+      .logo {
+        width: 50%;
+      }
+
+      .featured {
+        width: 50%;
+      }
+    }
+  }
+</style>

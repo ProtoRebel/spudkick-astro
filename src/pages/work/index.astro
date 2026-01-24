@@ -1,0 +1,173 @@
+---
+import { getCollection } from 'astro:content';
+import Page from '../../layouts/Page.astro';
+import Hero from '../../blocks/Hero.astro';
+import Button from "../../partials/Button.astro";
+import Arrow from "../../partials/Arrow.astro";
+import RotatingWords from "../../partials/RotatingWords.astro";
+
+let workEntries = [];
+let error = null;
+
+try {
+  workEntries = await getCollection('work');
+} catch (e) {
+  error = e;
+  console.error('Error fetching work collection:', e);
+}
+
+if (workEntries.length > 0) {
+  workEntries.sort((a, b) =>
+    new Date(b.data.launchDate).getTime() - new Date(a.data.launchDate).getTime()
+  );
+}
+
+const title = 'Our Work: Stuff That Actually Works';
+const description = 'Dive into our portfolio of websites, apps, and eCommerce projects built to last. No shortcuts—just real results.';
+const permalink = new URL('work', Astro.site).toString();
+---
+
+<Page title={title} description={description} permalink={permalink} current="work">
+
+  <Hero image="circuits" text="Case Studies" color="yellow" />
+
+  <section class="work">
+    {workEntries.map((work) => {
+      const workSlug = work.id.split('.')[0];
+      const workImgPath = work.data.imgPath;
+      return (
+        <article>
+          <a href={`/work/${workSlug}`}>
+            <header transition:name=`work-header-${workSlug}`>
+              <img
+                src=`${workImgPath}${work.data.photoFeatured}`
+                width="960"
+                height="720"
+                class="featured"
+                transition:name=`work-featured-${workSlug}`
+                alt=`Featured image for ${work.data.client}`
+              />
+              <h2 transition:name=`work-title-${workSlug}`>
+                <img
+                  src=`${workImgPath}${work.data.emblem}`
+                  width="192"
+                  height="192"
+                  class="emblem"
+                  alt=`Emblem for ${work.data.client}`
+                  transition:name=`work-logo-${workSlug}`
+                />
+                <strong>
+                  {work.data.client}
+                  <span class="arrow">
+                    <Arrow />
+                  </span>
+                </strong>
+                <small>{work.data.searchTerm}</small>
+              </h2>
+            </header>
+          </a>
+        </article>
+      )
+    })}
+  </section>
+
+  <section>
+    <hr class="bottom" />
+  </section>
+
+  <section id="cta">
+    <RotatingWords before="Get your" words={["website","software","webapp"]} after="on this list" />
+    <Button url="#schedule" title="Let's Talk" />
+  </section>
+</Page>
+
+<style>
+  section {
+    padding: var(--pad);
+    max-width: var(--layout-max--reading);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--pad);
+  }
+
+  a {
+    aspect-ratio: 4/3;
+    width: 100%;
+    position: relative;
+    text-decoration: none;
+
+    &:hover {
+      .featured {
+        transform: scale(0.95);
+      }
+
+      .arrow {
+        opacity: 1;
+      }
+
+      h2 {
+        transform: translateY(-1rem);
+      }
+    }
+  }
+
+  h2 {
+    padding: 0 0 0 4.5rem;
+    margin: 0;
+    font-size: var(--font-size--huge);
+    line-height: 1.5;
+    transition: var(--transition-hover);
+
+    small {
+      display: block;
+      font-family: var(--font-family--default);
+      color: var(--color-white);
+      font-size: var(--font-size);
+      text-transform: none;
+    }
+  }
+
+  .featured {
+    transition: var(--transition-grow);
+  }
+
+  .arrow {
+    color: var(--color-white);
+    font-size: 0.5em;
+    opacity: 0;
+    transition: var(--transition-hover);
+  }
+
+  .emblem {
+    width: 4rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  .bottom {
+    margin: var(--pad-double) auto;
+  }
+
+  #cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--pad-quad);
+  }
+
+  @media (min-width: 960px) {
+    article {
+      width: calc(50% - var(--pad));
+    }
+
+    h2 {
+      font-size: var(--font-size--large);
+
+      small {
+        font-size: 0.65em;
+      }
+    }
+  }
+</style>
