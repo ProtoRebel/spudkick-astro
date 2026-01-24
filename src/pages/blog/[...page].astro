@@ -1,0 +1,93 @@
+---
+import { type GetStaticPaths } from 'astro';
+import Page from '../../layouts/Page.astro';
+import { getPostsByPage, getBlog, getImagePath } from '../../utils/getBlog';
+
+export const getStaticPaths = (async () => {
+	const { posts, pagination } = await getBlog();
+	const paths = [];
+
+	// Generate paths for all pages
+	for (let i = 1; i <= pagination.totalPages; i++) {
+		paths.push({
+			params: { page: i === 1 ? undefined : i.toString() },
+			props: { pageNum: i }
+		});
+	}
+
+	return paths;
+}) satisfies GetStaticPaths;
+
+const { pageNum } = Astro.props;
+const { posts, pagination } = await getPostsByPage(pageNum || 1);
+const pageNumbers = Array.from({ length: pagination.totalPages }, (_, i) => i + 1);
+
+function getPagePath(page: number) {
+	return page === 1 ? '/blog' : `/blog/${page}`;
+}
+
+const title = 'Blog: Unfiltered Web Dev Wisdom';
+const description = 'Industry truths, bold opinions, and no sugarcoating. Get real advice for building better websites and apps.';
+const permalink = new URL(getPagePath(pageNum || 1), Astro.site).toString();
+---
+
+<Page title={title} description={description} permalink={permalink} current="blog">
+	<section class={`blog blog-${pageNum || 1}`} >
+		{posts.map((post) => (
+			<article>
+				<a href={`/blog/${post.slug}`}>
+					<div class="image" transition:name={`img-${post.slug}`}>
+						<img
+							src={getImagePath(post.data.featuredImage.img)}
+							alt={post.data.featuredImage.title}
+							width="1260"
+							height="720"
+						/>
+					</div>
+					<header class="data">
+						<h2 transition:name={`title-${post.slug}`}>
+							{post.data.title}
+						</h2>
+						<p class="meta" transition:name={`meta-${post.slug}`}>
+							{post.data.publishDate}
+						</p>
+						<p class="description">
+							{post.data.description}
+						</p>
+					</header>
+				</a>
+			</article>
+		))}
+	</section>
+
+	<section class="pagination">
+		<nav transition:name="blog-navigation">
+			{pagination.totalPages > 1 && pagination.hasPrevPage && (
+				<a href={getPagePath(pagination.currentPage - 1)} aria-label="Previous page" class="previous">
+					<span class="icon icon-arrow"></span>
+				</a>
+			)}
+
+			{pagination.totalPages > 1 && pageNumbers.map((num) => (
+				<a
+					href={getPagePath(num)}
+					class={num === pagination.currentPage ? 'is-active number' : 'number'}
+					aria-current={num === pagination.currentPage ? 'page' : undefined}
+					aria-label={`Page ${num}`}
+				>
+					{num}
+				</a>
+			))}
+
+			{pagination.hasNextPage && (
+				<a href={getPagePath(pagination.currentPage + 1)} aria-label="Next page" class="next">
+					<span class="icon icon-arrow"></span>
+				</a>
+			)}
+		</nav>
+	</section>
+</Page>
+
+<style>
+
+</style>

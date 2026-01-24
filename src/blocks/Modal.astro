@@ -1,0 +1,314 @@
+---
+import Loader from "../partials/Loader.astro";
+
+interface Props {
+  id: string;
+  title: string;
+  iframeSrc: string;
+}
+
+const { id, title, iframeSrc } = Astro.props;
+---
+
+<dialog
+  id={id}
+  class="modal"
+  data-iframe-src={iframeSrc}
+  aria-labelledby="modal-title"
+  aria-modal="true"
+>
+  <div class="modal-content" tabindex="-1">
+    <header>
+      <h2 id="modal-title">{title}</h2>
+      <button class="close-button" aria-label="Close modal">
+        <span class="icon icon-close"></span>
+      </button>
+    </header>
+    <div class="iframe-container">
+      <div class="loading-overlay is-active">
+        <Loader text="Checking availability calendar..." />
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  class ModalHandler {
+    static instances = new Map();
+
+    static initialize() {
+      const modals = document.querySelectorAll('dialog.modal');
+      if (!modals.length) {
+        console.error('No modals found');
+        return;
+      }
+
+      modals.forEach(modal => {
+        if (!this.instances.has(modal.id)) {
+          this.instances.set(modal.id, new ModalHandler(modal));
+        }
+      });
+    }
+
+    static cleanup() {
+      this.instances.forEach(instance => instance.dispose());
+      this.instances.clear();
+    }
+
+    constructor(modal) {
+      this.modal = modal;
+      this.closeButton = modal.querySelector('.close-button');
+      this.iframeContainer = modal.querySelector('.iframe-container');
+      this.overlay = modal.querySelector('.loading-overlay');
+      this.iframeSrc = modal.dataset.iframeSrc;
+      this.isClosing = false;
+      this.clickHandler = this.handleClick.bind(this);
+
+      if (this.modal && this.closeButton && this.iframeContainer && this.overlay && this.iframeSrc) {
+        this.initEvents();
+      }
+    }
+
+    handleClick(e) {
+      if (e.target.closest(`a[href="#${this.modal.id}"]`)) {
+        e.preventDefault();
+        this.open();
+      }
+    }
+
+    initEvents() {
+      document.addEventListener('click', this.clickHandler);
+      this.closeButton.addEventListener('click', () => this.close());
+      this.modal.addEventListener('click', e => {
+        if (e.target === this.modal) this.close();
+      });
+
+      this.modal.addEventListener('cancel', e => {
+        e.preventDefault();
+        this.close();
+      });
+
+      this.modal.addEventListener('animationend', e => {
+        if (this.isClosing && e.target === this.modal) {
+          this.modal.close();
+          this.isClosing = false;
+          const iframe = this.iframeContainer.querySelector('iframe');
+          iframe?.remove();
+        }
+      });
+
+      // Prevent default focus behavior
+      this.modal.addEventListener('show', (e) => {
+        e.preventDefault();
+      });
+
+      this.modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') this.close();
+        if (e.key === 'Tab') this.handleTabTrapping(e);
+      });
+    }
+
+    handleTabTrapping(e) {
+      const focusableElements = this.modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+      const firstFocusable = focusableElements[0];
+      const lastFocusable = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey && document.activeElement === firstFocusable) {
+        e.preventDefault();
+        lastFocusable.focus();
+      } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+        e.preventDefault();
+        firstFocusable.focus();
+      }
+    }
+
+    dispose() {
+      document.removeEventListener('click', this.clickHandler);
+    }
+
+    open() {
+      this.modal.classList.remove('closing');
+      this.modal.showModal();
+      void this.modal.offsetWidth;
+      this.modal.classList.add('opening');
+      this.overlay.classList.add('is-active');
+      this.overlay.classList.remove('is-inactive');
+
+      // Clear any existing iframes
+      const existingIframes = this.iframeContainer.querySelectorAll('iframe');
+      existingIframes.forEach(iframe => iframe.remove());
+
+      const iframe = document.createElement('iframe');
+      iframe.src = this.iframeSrc;
+      iframe.width = '100%';
+      iframe.style.height = '83vh';
+      iframe.loading = 'lazy';
+      iframe.autofocus = true;
+
+      iframe.addEventListener('load', () => {
+        setTimeout(() => {
+          this.overlay.classList.remove('is-active');
+          this.overlay.classList.add('is-inactive');
+        }, 3000);
+      });
+
+      this.iframeContainer.appendChild(iframe);
+    }
+
+    close() {
+      this.isClosing = true;
+      this.modal.classList.remove('opening');
+      void this.modal.offsetWidth;
+      this.modal.classList.add('closing');
+    }
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    ModalHandler.cleanup();
+    ModalHandler.initialize();
+  }, { once: false });
+</script>
+
+<style>
+  .modal {
+    padding: 0;
+    border: var(--border);
+    border-color: var(--color-white);
+    border-radius: var(--border-radius);
+    width: calc(100% - var(--pad-double));
+    max-width: var(--layout-max--small);
+    height: 90vh;
+    background: var(--color-black);
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+
+  .modal::backdrop {
+    background: var(--color-black--clear);
+    transition: var(--transition-move);
+  }
+
+  .modal.opening {
+    animation: modal-in 500ms ease-out forwards;
+  }
+
+  .modal.opening::backdrop {
+    background: var(--color-black--trans);
+  }
+
+  .modal.closing {
+    animation: modal-out 250ms ease-in forwards;
+  }
+
+  .modal.closing::backdrop {
+    background: var(--color-black--clear);
+  }
+
+  @keyframes modal-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9) translateY(var(--pad));
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes modal-out {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.9) translateY(var(--pad));
+    }
+  }
+
+  .modal-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-black);
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--pad);
+  }
+
+  h2 {
+    margin: 0;
+    color: var(--color-blue);
+    font-size: var(--font-size--large);
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    font-size: var(--font-size--large);
+    cursor: pointer;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    width: 2rem;
+    height: 2rem;
+    transition: var(--transition-hover);
+    transform-origin: center center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  &:hover,
+  &:active,
+  &:focus {
+     color: var(--color-blue);
+     transform: rotate(180deg);
+   }
+  }
+
+  .iframe-container {
+    flex: 1;
+    padding: 0;
+    overflow: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    position: relative;
+  }
+
+  .iframe-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  iframe {
+    display: block;
+    background: var(--color-black);
+  }
+
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-black);
+    transition: var(--transition-move);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 10;
+    padding: var(--pad);
+  }
+
+  .loading-overlay.is-active {
+    opacity: 1;
+    height: 100%;
+  }
+
+  .loading-overlay.is-inactive {
+    opacity: 0;
+    height: 0;
+  }
+</style>

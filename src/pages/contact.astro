@@ -1,18 +1,19 @@
 ---
-import LayoutDefault from '../layouts/LayoutDefault.astro';
+import Page from '../layouts/Page.astro';
 
+const current = 'contact';
 const title = 'Get in touch with ProtoRebel, curator of SpudKick';
 const description = '';
-const permalink = Astro.site.href;
+const permalink = Astro.site.href + current;
 ---
 
-<LayoutDefault title={title} description={description} permalink={permalink} current="home">
+<Page title={title} description={description} permalink={permalink} current={current}>
   <section>
     <p>
       Contact page information
     </p>
   </section>
-</LayoutDefault>
+</Page>
 
 <style>
 

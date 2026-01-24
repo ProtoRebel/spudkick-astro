@@ -12,13 +12,14 @@ trim_trailing_whitespace = true
 
 # Astro, JS, TS, JSON files
 [*.{astro,js,jsx,ts,tsx,json}]
-indent_style = space
+indent_style = tab
 indent_size = 2
 
 # CSS files
 [*.{css,scss}]
-indent_style = space
+indent_style = tab
 indent_size = 2
+ij_css_use_double_quotes = false
 
 # Markdown files
 [*.md]

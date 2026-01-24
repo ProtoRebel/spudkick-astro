@@ -1,0 +1,100 @@
+---
+import Head from '../partials/Head.astro';
+import Header from '../blocks/Header.astro';
+import Footer from '../blocks/Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  permalink: string;
+  current?: string;
+  subhead?: string;
+  openGraph?: any;
+}
+
+const { title, description, permalink, current, subhead, openGraph } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="no-js">
+<head>
+  <Head
+    title={title}
+    description={description}
+    permalink={permalink}
+    openGraph={openGraph}
+  />
+</head>
+<body itemscope itemtype="http://schema.org/WebPage">
+<a href="#main-content" class="reader-only">Skip to main content</a>
+<div class={`layout layout-${current}`} role="document">
+  <Header current={current} subhead={subhead} />
+  <main id="main-content" role="main" aria-label={title}>
+    <slot />
+  </main>
+  <Footer current={current} />
+</div>
+</body>
+</html>
+
+<style>
+</style>
+
+<script>
+  interface IntersectionOptions {
+    root: Element | null;
+    rootMargin: string;
+    threshold: number;
+  }
+
+  function setupIntersectionObserver() {
+    const options: IntersectionOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.05
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    function observeSections() {
+      document.querySelectorAll('section').forEach(section => {
+        observer.observe(section);
+      });
+    }
+
+    observeSections();
+
+    document.addEventListener('astro:page-load', () => {
+      observeSections();
+    });
+
+    document.addEventListener('astro:before-preparation', () => {
+      observer.disconnect();
+    });
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (prefersReducedMotion.matches) {
+      document.querySelectorAll('section').forEach(section => {
+        section.classList.add('in-view');
+      });
+      observer.disconnect();
+    }
+
+    document.addEventListener('astro:after-swap', () => {
+      observer.disconnect();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupIntersectionObserver);
+  } else {
+    setupIntersectionObserver();
+  }
+</script>

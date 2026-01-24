@@ -1,19 +1,19 @@
 html {
-    overflow-y: scroll;
-    box-sizing: border-box;
+  overflow-y: scroll;
+  box-sizing: border-box;
 }
 
 @supports (scrollbar-gutter: stable) {
-    html {
-        overflow-y: auto;
-        scrollbar-gutter: stable;
-    }
+  html {
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+  }
 }
 
 *,
 *:before,
 *:after {
-    box-sizing: inherit;
+  box-sizing: inherit;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/
@@ -101,12 +101,12 @@ time,
 mark,
 audio,
 video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font-weight: inherit;
-    vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font-weight: inherit;
+  vertical-align: baseline;
 }
 
 /* HTML5 display-role reset for older browsers - Added "main" element for IE compliance */
@@ -122,25 +122,25 @@ main,
 menu,
 nav,
 section {
-    display: block;
+  display: block;
 }
 
 body {
-    line-height: 1;
+  line-height: 1;
 }
 
 ol,
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 blockquote,
 q {
-    quotes: none;
-    clear: both;
+  quotes: none;
+  clear: both;
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }

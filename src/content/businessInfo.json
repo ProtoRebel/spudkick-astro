@@ -1,0 +1,70 @@
+{
+  "name": {
+    "default": "ProtoRebel",
+    "legal": "ProtoRebel, LLC",
+    "short": "PR"
+  },
+  "tagline": {
+    "short": "Web/Apps/Software",
+    "long": "Web/App Design & Development Agency",
+    "area": "Boise, Idaho"
+  },
+  "address": {
+    "city": "Boise",
+    "state": "Idaho",
+    "postal": "83705"
+  },
+  "email": "support@protorebel.com",
+  "year": 2024,
+  "phone": "208.654.1004",
+  "social": [
+    {
+      "network": "Bluesky",
+      "username": "@protorebel",
+      "url": "https://protorebel.bsky.social",
+      "primary": true
+    },
+    {
+      "network": "Facebook",
+      "username": "@protorebel",
+      "url": "https://www.facebook.com/protorebel",
+      "primary": false
+    },
+    {
+      "network": "Github",
+      "username": "@ProtoRebel",
+      "url": "https://github.com/ProtoRebel",
+      "primary": true
+    },
+    {
+      "network": "Google Maps",
+      "username": "Places Listing",
+      "url": "https://maps.app.goo.gl/BdegUTDX1ZGCAT4C6",
+      "primary": true
+    },
+    {
+      "network": "Instagram",
+      "username": "@proto.rebel",
+      "url": "https://www.instagram.com/proto.rebel",
+      "primary": false
+    },
+    {
+      "network": "LinkedIn",
+      "username": "@protorebel",
+      "url": "https://www.linkedin.com/company/protorebel",
+      "primary": false
+    },
+    {
+      "network": "Reddit",
+      "username": "@proto-rebel",
+      "url": "https://www.reddit.com/user/proto-rebel/",
+      "primary": false
+    },
+    {
+      "network": "X",
+      "username": "@ProtoRebelLlc",
+      "url": "https://x.com/ProtoRebelLlc",
+      "primary": false
+    }
+  ]
+}

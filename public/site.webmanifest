@@ -1,0 +1,21 @@
+{
+  "name": "SpudKick Portfolio",
+  "short_name": "SpudKick",
+  "description": "Portfolio and blog built with SpudKick Astro framework",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#000000",
+  "theme_color": "#fab800",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

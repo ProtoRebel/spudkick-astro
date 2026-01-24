@@ -1,0 +1,152 @@
+# robots-production.txt - PRODUCTION ENVIRONMENT
+# Allows and encourages ALL crawlers
+
+# Default: Allow everything
+User-agent: *
+Allow: /
+Crawl-delay: 0
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Googlebot-Video
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# OpenAI
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic (Claude)
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# Common Crawl
+User-agent: CCBot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Facebook
+User-agent: FacebookBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Twitter/X
+User-agent: Twitterbot
+Allow: /
+
+# LinkedIn
+User-agent: LinkedInBot
+Allow: /
+
+# Pinterest
+User-agent: Pinterestbot
+Allow: /
+
+# Slack
+User-agent: Slackbot
+Allow: /
+
+# Discord
+User-agent: Discordbot
+Allow: /
+
+# Apple
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+
+# Archive.org
+User-agent: ia_archiver
+Allow: /
+
+# Alexa/Amazon
+User-agent: Amazonbot
+Allow: /
+
+# Bytedance (TikTok)
+User-agent: Bytespider
+Allow: /
+
+# Other search/AI crawlers
+User-agent: Diffbot
+Allow: /
+
+User-agent: Omgilibot
+Allow: /
+
+User-agent: PetalBot
+Allow: /
+
+User-agent: Sogou
+Allow: /
+
+# SEO/Analytics tools
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: MJ12bot
+Allow: /
+
+User-agent: DotBot
+Allow: /
+
+User-agent: Screaming Frog SEO Spider
+Allow: /
+
+# Sitemap location (update with your actual domain)
+Sitemap: https://www.yourdomain.com/sitemap-index.xml
+
+# Host directive (optional - specify preferred domain)
+# Host: https://www.yourdomain.com

@@ -1,18 +1,19 @@
 ---
-import LayoutDefault from '../layouts/LayoutDefault.astro';
+import Page from '../layouts/Page.astro';
 
+const current = 'home';
 const title = 'SpudKick: Astro Starter Theme';
 const description = 'A super lean, performant, and helpful Astro Theme ready to jump in any direction.';
 const permalink = Astro.site.href;
 ---
 
-<LayoutDefault title={title} description={description} permalink={permalink} current="home">
+<Page title={title} description={description} permalink={permalink} current={current}>
   <section>
     <p>
       Page content goes here
     </p>
   </section>
-</LayoutDefault>
+</Page>
 
 <style>
 
