@@ -3,11 +3,11 @@ const { current = '' } = Astro.props;
 ---
 
 <nav class=`nav nav-${current}`>
-  <a class={current === 'home' ? 'selected' : ''} href='/'>Home</a>
-  <a class={current === 'about' ? 'selected' : ''} href='/about'>About</a>
-  <a class={current === 'portfolio' ? 'selected' : ''} href='/portfolio'>Portfolio</a>
-  <a class={current === 'blog' ? 'selected' : ''} href='/blog'>Blog</a>
-  <a class={current === 'contact' ? 'selected' : ''} href='/contact'>Contact</a>
+  <a class={current === 'home' ? 'is-active' : ''} href='/'>Home</a>
+  <a class={current === 'about' ? 'is-active' : ''} href='/about'>About</a>
+  <a class={current === 'portfolio' ? 'is-active' : ''} href='/portfolio'>Portfolio</a>
+  <a class={current === 'blog' ? 'is-active' : ''} href='/blog'>Blog</a>
+  <a class={current === 'contact' ? 'is-active' : ''} href='/contact'>Contact</a>
 </nav>
 
 <style>
