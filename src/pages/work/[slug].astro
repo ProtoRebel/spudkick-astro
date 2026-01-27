@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Page from '../../layouts/Page.astro';
 import Button from "../../partials/Button.astro";
-import RotatingWords from "../../partials/RotatingWords.astro";
 
 export async function getStaticPaths() {
   const workEntries = await getCollection('work');
@@ -89,7 +88,6 @@ const permalink = new URL(`work/${workSlug}`, Astro.site).toString();
     </section>
 
     <section id="cta">
-      <RotatingWords before="Identify your" words={["website","software","webapp"]} after="challenges & features" />
       <Button url="#schedule" title="Let's Talk" />
     </section>
 

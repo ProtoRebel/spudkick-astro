@@ -1,10 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Page from '../../layouts/Page.astro';
-import Hero from '../../blocks/Hero.astro';
 import Button from "../../partials/Button.astro";
-import Arrow from "../../partials/Arrow.astro";
-import RotatingWords from "../../partials/RotatingWords.astro";
 
 let workEntries = [];
 let error = null;
@@ -28,8 +25,6 @@ const permalink = new URL('work', Astro.site).toString();
 ---
 
 <Page title={title} description={description} permalink={permalink} current="work">
-
-  <Hero image="circuits" text="Case Studies" color="yellow" />
 
   <section class="work">
     {workEntries.map((work) => {
@@ -58,9 +53,6 @@ const permalink = new URL('work', Astro.site).toString();
                 />
                 <strong>
                   {work.data.client}
-                  <span class="arrow">
-                    <Arrow />
-                  </span>
                 </strong>
                 <small>{work.data.searchTerm}</small>
               </h2>
@@ -76,7 +68,6 @@ const permalink = new URL('work', Astro.site).toString();
   </section>
 
   <section id="cta">
-    <RotatingWords before="Get your" words={["website","software","webapp"]} after="on this list" />
     <Button url="#schedule" title="Let's Talk" />
   </section>
 </Page>
