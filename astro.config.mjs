@@ -5,11 +5,14 @@ import remarkSmartypants from 'remark-smartypants'
 import rehypeExternalLinks from 'rehype-external-links'
 import sitemap from '@astrojs/sitemap'
 
+import cloudflare from '@astrojs/cloudflare';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://spudkick.protorebel.com',
   integrations: [mdx(),sitemap()],
   output: 'static',
+
   markdown: {
     shikiConfig: {
       theme: 'nord',
@@ -24,18 +27,22 @@ export default defineConfig({
       ],
     ],
   },
+
   style: {
     postcss: './postcss.config.cjs',
   },
+
   vite: {
     build: {
       rollupOptions: {
         output: {
-          entryFileNames: 'protorebel.[hash].mjs',
-          chunkFileNames: 'chunks/protorebel.[hash].mjs',
-          assetFileNames: 'assets/protorebel.[hash][extname]',
+          entryFileNames: 'iar.[hash].mjs',
+          chunkFileNames: 'chunks/iar.[hash].mjs',
+          assetFileNames: 'assets/iar.[hash][extname]',
         },
       },
     },
   },
+
+  adapter: cloudflare(),
 })
