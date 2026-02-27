@@ -140,6 +140,17 @@ const titleId = `${id}-title`;
 		}
 	}
 
+	// Initialize on DOMContentLoaded (works without view transitions)
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', () => {
+			ModalHandler.initialize();
+		});
+	} else {
+		// DOM already loaded
+		ModalHandler.initialize();
+	}
+
+	// Also handle view transitions if enabled
 	document.addEventListener('astro:page-load', () => {
 		ModalHandler.cleanup();
 		ModalHandler.initialize();
