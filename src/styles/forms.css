@@ -1,0 +1,875 @@
+/**
+ * forms.css
+ * A vanilla CSS form reset inspired by formhack.
+ * Uses CSS custom properties for easy theming and native CSS nesting.
+ *
+ * Usage in Astro:
+ *   import './forms.css';
+ *   — or —
+ *   <link rel="stylesheet" href="/forms.css" />
+ *
+ * Override any var at :root or a scoped selector to theme without touching this file.
+ */
+
+/* ─────────────────────────────────────────────
+   Custom Properties
+   ───────────────────────────────────────────── */
+:root {
+	/* Typography */
+	--form-font-family: inherit;
+	--form-font-size: 1rem;
+	--form-line-height: 1.5;
+	--form-font-weight: 400;
+	--form-font-weight-label: var(--form-font-weight);
+
+	/* Colors */
+	--form-color: inherit;
+	--form-placeholder-color: var(--color-primary--dark);
+	--form-bg: var(--color-bg--light);
+	--form-bg-disabled: var(--color-bg);
+	--form-border-color: var(--color-bg--dark);
+	--form-border-color-focus: var(--color-primary);
+	--form-border-color-disabled: var(--form-border-color);
+
+	/* Sizing */
+	--form-border-width: var(--border-width--thin);
+	--form-border-style: solid;
+	--form-border-radius: var(--border-radius--large);
+	--form-padding-x: var(--pad);
+	--form-padding-y: var(--pad-half);
+	--form-height: 3rem;
+
+	/* Focus ring */
+	--form-focus-ring-width: 3px;
+	--form-focus-ring-color: color-mix(in srgb, var(--form-border-color-focus) 30%, transparent);
+	--form-focus-ring-offset: 0px;
+
+	/* Transitions */
+	--form-transition: var(--transition-hover);
+
+	/* Checkbox / Radio */
+	--form-check-size: 1rem;
+	--form-check-color: #3b82f6;
+	--form-check-radius: 0.2rem;
+
+	/* Range */
+	--form-range-thumb-size: 1rem;
+	--form-range-thumb-color: #3b82f6;
+	--form-range-track-height: 0.25rem;
+	--form-range-track-color: #d1d5db;
+
+	/* Select arrow */
+	--form-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+	--form-select-arrow-size: 1rem;
+
+	/* Fieldset / Legend */
+	--form-fieldset-border-color: var(--form-border-color);
+	--form-fieldset-border-width: var(--form-border-width);
+	--form-fieldset-border-radius: var(--form-border-radius);
+	--form-fieldset-padding: var(--pad);
+	--form-legend-font-size: var(--font-weight--regular);
+	--form-legend-font-weight: var(--form-font-weight-label);
+	--form-legend-padding-x: 0;
+
+	/* Constraint validation states */
+	--form-color-valid: #16a34a;
+	--form-color-invalid: #dc2626;
+	--form-border-color-valid: #16a34a;
+	--form-border-color-invalid: #dc2626;
+	--form-focus-ring-color-valid: color-mix(in srgb, var(--form-color-valid) 25%, transparent);
+	--form-focus-ring-color-invalid: color-mix(in srgb, var(--form-color-invalid) 25%, transparent);
+
+	/* Details / Summary disclosure */
+	--form-details-border-color: var(--form-border-color);
+	--form-details-border-radius: var(--form-border-radius);
+	--form-details-padding: var(--form-padding-y) var(--form-padding-x);
+	--form-summary-font-weight: var(--form-font-weight-label);
+	--form-summary-marker-color: var(--form-placeholder-color);
+
+	/* Dialog */
+	--form-dialog-bg: var(--form-bg);
+	--form-dialog-border-radius: var(--form-border-radius);
+	--form-dialog-padding: 1.5rem;
+	--form-dialog-shadow: 0 4px 24px rgb(0 0 0 / 0.12);
+	--form-dialog-backdrop: rgb(0 0 0 / 0.4);
+
+	/* Optgroup */
+	--form-optgroup-font-weight: var(--form-font-weight-label);
+	--form-optgroup-color: var(--form-placeholder-color);
+	--form-optgroup-font-size: 0.8125rem;
+}
+
+
+/* ─────────────────────────────────────────────
+   Base resets — the formhack core
+   ───────────────────────────────────────────── */
+
+/*
+ * 1. Normalize font rendering across all input types and browsers.
+ * 2. Remove browser-specific styling so we start from zero.
+ * 3. Use box-sizing: border-box consistently (matches most modern resets).
+ */
+button,
+input,
+optgroup,
+option,
+select,
+textarea,
+fieldset,
+legend,
+form,
+datalist,
+details,
+summary,
+dialog,
+address,
+output,
+label {
+	box-sizing: border-box;               /* 3 */
+	font-family: var(--form-font-family); /* 1 */
+	font-size: var(--form-font-size);
+	font-weight: var(--form-font-weight);
+	line-height: var(--form-line-height);
+	color: var(--form-color);
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	appearance: none;                     /* 2 — LightningCSS adds -webkit- prefix at build */
+}
+
+
+/* ─────────────────────────────────────────────
+   Text-like inputs + textarea + select
+   ───────────────────────────────────────────── */
+
+input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]):not([type="file"]):not([type="image"]):not([type="submit"]):not([type="reset"]):not([type="button"]),
+textarea,
+select {
+	display: block;
+	width: 100%;
+	min-height: var(--form-height);
+	padding: var(--form-padding-y) var(--form-padding-x);
+	background-color: var(--form-bg);
+	border: var(--form-border-width) var(--form-border-style) var(--form-border-color);
+	border-radius: var(--form-border-radius);
+	color: var(--form-color);
+	transition: var(--form-transition);
+	outline: none;
+
+	&::placeholder {
+		color: var(--form-placeholder-color);
+		opacity: 1; /* Firefox reduces opacity by default */
+	}
+
+	&:focus {
+		border-color: var(--form-border-color-focus);
+		box-shadow:
+			0 0 0 calc(var(--form-focus-ring-width) + var(--form-focus-ring-offset)) var(--form-focus-ring-color);
+	}
+
+	&:disabled,
+	&[readonly] {
+		background-color: var(--form-bg-disabled);
+		border-color: var(--form-border-color-disabled);
+		cursor: not-allowed;
+		opacity: 0.7;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Textarea specifics
+   ───────────────────────────────────────────── */
+
+textarea {
+	min-height: calc(var(--form-height) * 3);
+	height: auto;
+	resize: vertical;
+	/* Prevent odd line-height layout shifts in some browsers */
+	vertical-align: top;
+}
+
+
+/* ─────────────────────────────────────────────
+   Select
+   ───────────────────────────────────────────── */
+
+select {
+	background-image: var(--form-select-arrow);
+	background-repeat: no-repeat;
+	background-position: right var(--form-padding-x) center;
+	background-size: var(--form-select-arrow-size);
+	padding-right: calc(var(--form-padding-x) * 2.5);
+	cursor: pointer;
+
+	/* Remove the default arrow in IE10+ */
+	&::-ms-expand {
+		display: none;
+	}
+
+	&[multiple],
+	&[size]:not([size="1"]) {
+		background-image: none;
+		padding-right: var(--form-padding-x);
+		height: auto;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Checkbox & Radio
+   ───────────────────────────────────────────── */
+
+input[type="checkbox"],
+input[type="radio"] {
+	width: var(--form-check-size);
+	height: var(--form-check-size);
+	flex-shrink: 0;
+	border: var(--form-border-width) var(--form-border-style) var(--form-border-color);
+	background-color: var(--form-bg);
+	cursor: pointer;
+	transition: var(--form-transition);
+	outline: none;
+	/* Keep vertical rhythm when inline */
+	vertical-align: middle;
+	position: relative;
+
+	&:focus-visible {
+		border-color: var(--form-border-color-focus);
+		box-shadow:
+			0 0 0 calc(var(--form-focus-ring-width) + var(--form-focus-ring-offset)) var(--form-focus-ring-color);
+	}
+
+	&:checked {
+		background-color: var(--form-check-color);
+		border-color: var(--form-check-color);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+input[type="checkbox"] {
+	border-radius: var(--form-check-radius);
+
+	&:checked {
+		/* SVG checkmark */
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round' d='M3 8l4 4 6-6'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 75%;
+	}
+
+	&:indeterminate {
+		background-color: var(--form-check-color);
+		border-color: var(--form-check-color);
+		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cline x1='4' y1='8' x2='12' y2='8' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: 75%;
+	}
+}
+
+input[type="radio"] {
+	border-radius: 50%;
+
+	&:checked {
+		/* Inner dot via radial-gradient */
+		background-image: radial-gradient(
+			circle,
+			#ffffff 35%,
+			transparent 36%
+		);
+		background-repeat: no-repeat;
+		background-position: center;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Range
+   ───────────────────────────────────────────── */
+
+input[type="range"] {
+	display: block;
+	width: 100%;
+	height: var(--form-range-thumb-size);
+	padding: 0;
+	background: transparent;
+	cursor: pointer;
+	outline: none;
+
+	/* Track */
+	&::-webkit-slider-runnable-track {
+		height: var(--form-range-track-height);
+		background-color: var(--form-range-track-color);
+		border-radius: 999px;
+	}
+
+	&::-moz-range-track {
+		height: var(--form-range-track-height);
+		background-color: var(--form-range-track-color);
+		border-radius: 999px;
+		border: none;
+	}
+
+	/* Thumb */
+	&::-webkit-slider-thumb {
+		appearance: none; /* LightningCSS adds -webkit- prefix at build */
+		width: var(--form-range-thumb-size);
+		height: var(--form-range-thumb-size);
+		background-color: var(--form-range-thumb-color);
+		border: none;
+		border-radius: 50%;
+		margin-top: calc((var(--form-range-track-height) - var(--form-range-thumb-size)) / 2);
+		transition: var(--form-transition);
+	}
+
+	&::-moz-range-thumb {
+		width: var(--form-range-thumb-size);
+		height: var(--form-range-thumb-size);
+		background-color: var(--form-range-thumb-color);
+		border: none;
+		border-radius: 50%;
+		transition: var(--form-transition);
+	}
+
+	&:focus-visible {
+		&::-webkit-slider-thumb {
+			box-shadow: 0 0 0 var(--form-focus-ring-width) var(--form-focus-ring-color);
+		}
+		&::-moz-range-thumb {
+			box-shadow: 0 0 0 var(--form-focus-ring-width) var(--form-focus-ring-color);
+		}
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Color picker
+   ───────────────────────────────────────────── */
+
+input[type="color"] {
+	display: inline-block;
+	width: var(--form-height);
+	height: var(--form-height);
+	padding: 0.2rem;
+	background-color: var(--form-bg);
+	border: var(--form-border-width) var(--form-border-style) var(--form-border-color);
+	border-radius: var(--form-border-radius);
+	cursor: pointer;
+	outline: none;
+
+	&::-webkit-color-swatch-wrapper {
+		padding: 0;
+	}
+
+	&::-webkit-color-swatch,
+	&::-moz-color-swatch {
+		border: none;
+		border-radius: calc(var(--form-border-radius) * 0.6);
+	}
+
+	&:focus-visible {
+		border-color: var(--form-border-color-focus);
+		box-shadow:
+			0 0 0 calc(var(--form-focus-ring-width) + var(--form-focus-ring-offset)) var(--form-focus-ring-color);
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   File input
+   ───────────────────────────────────────────── */
+
+input[type="file"] {
+	display: block;
+	width: 100%;
+	font-size: var(--form-font-size);
+	color: var(--form-color);
+	cursor: pointer;
+	outline: none;
+
+	&::file-selector-button {
+		font-family: var(--form-font-family);
+		font-size: var(--form-font-size);
+		font-weight: var(--form-font-weight-label);
+		color: var(--form-color);
+		background-color: var(--form-bg-disabled);
+		border: var(--form-border-width) var(--form-border-style) var(--form-border-color);
+		border-radius: var(--form-border-radius);
+		padding: var(--form-padding-y) var(--form-padding-x);
+		margin-inline-end: var(--form-padding-x);
+		cursor: pointer;
+		transition: var(--form-transition);
+	}
+
+	&:focus-visible {
+		&::file-selector-button {
+			border-color: var(--form-border-color-focus);
+			box-shadow:
+				0 0 0 calc(var(--form-focus-ring-width) + var(--form-focus-ring-offset)) var(--form-focus-ring-color);
+		}
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Buttons (reset + submit + button element)
+   ───────────────────────────────────────────── */
+
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5em;
+	min-height: var(--form-height);
+	padding: var(--form-padding-y) calc(var(--form-padding-x) * 2);
+	font-family: var(--form-font-family);
+	font-size: var(--form-font-size);
+	font-weight: var(--form-font-weight-label);
+	line-height: var(--form-line-height);
+	color: var(--form-color);
+	background-color: transparent;
+	border: var(--form-border-width) var(--form-border-style) var(--form-border-color);
+	border-radius: var(--form-border-radius);
+	cursor: pointer;
+	text-decoration: none;
+	white-space: nowrap;
+	transition: var(--form-transition);
+	outline: none;
+	user-select: none; /* LightningCSS adds -webkit- prefix at build */
+
+	&:focus-visible {
+		border-color: var(--form-border-color-focus);
+		box-shadow:
+			0 0 0 calc(var(--form-focus-ring-width) + var(--form-focus-ring-offset)) var(--form-focus-ring-color);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Form element
+   ───────────────────────────────────────────── */
+
+form {
+	display: block;
+	/* Prevent the form element itself from contributing margin in flex/grid */
+	min-width: 0;
+}
+
+
+/* ─────────────────────────────────────────────
+   Label
+   ───────────────────────────────────────────── */
+
+label {
+	display: inline-block;
+	font-weight: var(--form-font-weight-label);
+	cursor: default;
+
+	/* Labels that directly wrap or are siblings of disabled inputs */
+	&:has(input:disabled),
+	&:has(select:disabled),
+	&:has(textarea:disabled) {
+		opacity: 0.6;
+		cursor: not-allowed;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Fieldset + Legend
+   ───────────────────────────────────────────── */
+
+fieldset {
+	display: block;
+	min-width: 0; /* Prevent blowing out flex/grid layouts — the classic fieldset gotcha */
+	padding: 0;
+	border: 0;
+	margin: 0;
+
+	/*
+	 * [bordered] variant — opt-in with <fieldset data-bordered>
+	 * Gives you a fieldset that actually looks like one without fighting UA styles.
+	 */
+	&[data-bordered] {
+		padding: var(--form-fieldset-padding);
+		border: var(--form-fieldset-border-width) solid var(--form-fieldset-border-color);
+		border-radius: var(--form-fieldset-border-radius);
+
+		& > legend {
+			/* Pull legend into the border line when bordered */
+			margin-inline-start: calc(var(--form-legend-padding-x) * -1);
+			padding-inline: var(--form-legend-padding-x);
+		}
+	}
+}
+
+legend {
+	/*
+	 * display: table corrects text wrapping in legacy Edge.
+	 * float: left is the modern equivalent that also works with border-radius fieldsets —
+	 * but it needs a clearfix on fieldset. We use table for broadest compat.
+	 */
+	display: table;
+	max-width: 100%;
+	white-space: normal;
+	padding: 0;
+	font-size: var(--form-legend-font-size);
+	font-weight: var(--form-legend-font-weight);
+	color: inherit;
+
+	/* Reset the UA's awkward default float/position behavior */
+	float: none;
+	position: static;
+	transform: translateY(1rem);
+
+	p {
+		font-style: italic;
+		color: var(--color-primary--dark);
+		font-size: var(--font-size--small);
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Optgroup + Option
+   ───────────────────────────────────────────── */
+
+optgroup {
+	font-weight: var(--form-optgroup-font-weight);
+	font-style: normal; /* UA often italicises optgroup label — reset it */
+	color: var(--form-optgroup-color);
+	font-size: var(--form-optgroup-font-size);
+}
+
+option {
+	font-weight: var(--form-font-weight);
+	font-size: var(--form-font-size);
+	color: var(--form-color);
+	background-color: var(--form-bg);
+	padding: var(--form-padding-y) var(--form-padding-x);
+
+	&:disabled {
+		color: var(--form-placeholder-color);
+	}
+
+	&:checked {
+		/* System-rendered, but at minimum set the bg so custom-rendered pickers match */
+		background-color: color-mix(in srgb, var(--form-check-color) 15%, var(--form-bg));
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Datalist
+   ───────────────────────────────────────────── */
+
+/*
+ * The <datalist> element itself is hidden by spec — browsers render it as a
+ * dropdown popover attached to an <input list="...">. There is no reliable
+ * cross-browser way to style the popover, so we reset what we can:
+ * mainly ensure the element is invisible and doesn't affect layout.
+ */
+datalist {
+	display: none; /* Ensure hidden in all contexts, including assistive tech that may expose it */
+}
+
+
+/* ─────────────────────────────────────────────
+   Details + Summary  (disclosure widget)
+   ───────────────────────────────────────────── */
+
+details {
+	display: block;
+	border: var(--form-border-width) solid var(--form-details-border-color);
+	border-radius: var(--form-details-border-radius);
+	overflow: hidden; /* Clip border-radius on open content */
+
+	& > summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding: var(--form-details-padding);
+		font-weight: var(--form-summary-font-weight);
+		cursor: pointer;
+		list-style: none;           /* Remove the default triangle in Firefox */
+		user-select: none;          /* LightningCSS adds -webkit- prefix at build */
+		outline: none;
+
+		/* Remove default marker in WebKit/Blink */
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		/* Custom disclosure arrow via pseudo-element */
+		&::after {
+			content: "";
+			display: inline-block;
+			width: 0.75rem;
+			height: 0.75rem;
+			flex-shrink: 0;
+			background-image: var(--form-select-arrow);
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: contain;
+			color: var(--form-summary-marker-color);
+			transition: transform 0.2s ease;
+		}
+
+		&:focus-visible {
+			box-shadow:
+				0 0 0 calc(var(--form-focus-ring-width) + var(--form-focus-ring-offset)) var(--form-focus-ring-color);
+		}
+	}
+
+	&[open] > summary::after {
+		transform: rotate(180deg);
+	}
+
+	/* Content area padding when open */
+	& > *:not(summary) {
+		padding: var(--form-details-padding);
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Dialog
+   ───────────────────────────────────────────── */
+
+dialog {
+	display: none; /* Hidden by default; browser shows when .showModal() / .show() called */
+	position: fixed;
+	inset: 0;
+	z-index: 100;
+	width: fit-content;
+	max-width: min(90vw, 40rem);
+	max-height: min(90vh, 100%);
+	margin: auto;
+	padding: var(--form-dialog-padding);
+	background-color: var(--form-dialog-bg);
+	border: var(--form-border-width) solid var(--form-border-color);
+	border-radius: var(--form-dialog-border-radius);
+	box-shadow: var(--form-dialog-shadow);
+	overflow: auto;
+	outline: none;
+
+	&[open] {
+		display: block;
+	}
+
+	/* Backdrop — only available on modal dialogs via showModal() */
+	&::backdrop {
+		background-color: var(--form-dialog-backdrop);
+		/* Backdrop doesn't inherit from dialog, so we set a sensible default */
+		backdrop-filter: none;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Output element
+   ───────────────────────────────────────────── */
+
+output {
+	display: inline-block;
+	/* output is a live result region — keep it readable inline */
+}
+
+
+/* ─────────────────────────────────────────────
+   Address (contact information context)
+   Often appears inside forms for billing/shipping blocks.
+   ───────────────────────────────────────────── */
+
+address {
+	display: block;
+	font-style: normal; /* UA renders address in italics — reset it */
+	line-height: var(--form-line-height);
+}
+
+
+/* ─────────────────────────────────────────────
+   Progress + Meter
+   ───────────────────────────────────────────── */
+
+progress,
+meter {
+	display: block;
+	width: 100%;
+	height: var(--form-range-track-height);
+	appearance: none; /* LightningCSS adds -webkit- prefix at build */
+	overflow: hidden;
+	border: none;
+	border-radius: 999px;
+	background-color: var(--form-range-track-color);
+}
+
+progress::-webkit-progress-bar {
+	background-color: var(--form-range-track-color);
+	border-radius: 999px;
+}
+
+progress::-webkit-progress-value {
+	background-color: var(--form-check-color);
+	border-radius: 999px;
+	transition: width 0.3s ease;
+}
+
+progress::-moz-progress-bar {
+	background-color: var(--form-check-color);
+	border-radius: 999px;
+}
+
+meter::-webkit-meter-optimum-value {
+	background-color: var(--form-check-color);
+}
+
+meter::-webkit-meter-suboptimum-value {
+	background-color: #f59e0b;
+}
+
+meter::-webkit-meter-even-less-good-value {
+	background-color: var(--form-color-invalid);
+}
+
+meter::-moz-meter-bar {
+	background-color: var(--form-check-color);
+}
+
+
+/* ─────────────────────────────────────────────
+   Constraint Validation States
+   :valid / :invalid / :required / :optional /
+   :in-range / :out-of-range / :placeholder-shown
+   ───────────────────────────────────────────── */
+
+/*
+ * We scope validation styles to [data-validate] on the form or a field wrapper
+ * so they don't fire on untouched fields on page load — a very common UX pitfall.
+ * Use JS to add the attribute after first submit or on blur.
+ *
+ * Example:
+ *   form.addEventListener('submit', () => form.dataset.validate = '');
+ *   input.addEventListener('blur', e => e.target.closest('[data-validate], form').dataset.validate = '');
+ */
+
+[data-validate] {
+	& input:invalid,
+	& select:invalid,
+	& textarea:invalid {
+		border-color: var(--form-border-color-invalid);
+
+		&:focus {
+			box-shadow:
+				0 0 0 calc(var(--form-focus-ring-width) + var(--form-focus-ring-offset)) var(--form-focus-ring-color-invalid);
+		}
+	}
+
+	& input:valid,
+	& select:valid,
+	& textarea:valid {
+		border-color: var(--form-border-color-valid);
+
+		&:focus {
+			box-shadow:
+				0 0 0 calc(var(--form-focus-ring-width) + var(--form-focus-ring-offset)) var(--form-focus-ring-color-valid);
+		}
+	}
+
+	& input:out-of-range {
+		border-color: var(--form-border-color-invalid);
+	}
+
+	& input:in-range {
+		border-color: var(--form-border-color-valid);
+	}
+}
+
+/*
+ * :required indicator — subtle asterisk via pseudo on label.
+ * Add [data-required-markers] to <form> to enable.
+ */
+[data-required-markers] label:has(+ :required)::after,
+[data-required-markers] label:has(> :required)::after {
+	content: " *";
+	color: var(--form-color-invalid);
+	font-weight: var(--form-font-weight);
+	/* Decorative — screen readers already announce 'required' from the input itself */
+}
+
+/* ─────────────────────────────────────────────
+   Search input — remove webkit chrome styling
+   ───────────────────────────────────────────── */
+
+input[type="search"] {
+	&::-webkit-search-decoration,
+	&::-webkit-search-cancel-button,
+	&::-webkit-search-results-button,
+	&::-webkit-search-results-decoration {
+		display: none;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Number input — hide native spinners
+   ───────────────────────────────────────────── */
+
+input[type="number"] {
+	appearance: textfield; /* LightningCSS adds -moz- prefix at build */
+
+	&::-webkit-outer-spin-button,
+	&::-webkit-inner-spin-button {
+		appearance: none; /* LightningCSS adds -webkit- prefix at build */
+		margin: 0;
+	}
+}
+
+
+/* ─────────────────────────────────────────────
+   Autofill — suppress browser background flash
+   ───────────────────────────────────────────── */
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+	/* Forces a very long transition so the yellow flash never visually appears.
+		 Override --form-autofill-bg and --form-autofill-color to match your theme.
+		 Note: box-shadow must remain -webkit- prefixed — this is a pseudo-class selector,
+		 not a property, so LightningCSS does not duplicate it. */
+	-webkit-box-shadow: 0 0 0 1000px var(--form-autofill-bg, var(--form-bg)) inset;
+	-webkit-text-fill-color: var(--form-autofill-color, var(--form-color));
+	transition: background-color 600000s ease 0s;
+}
