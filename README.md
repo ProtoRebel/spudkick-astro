@@ -1,44 +1,72 @@
-# SpudKick - Astro Starter Framework by ProtoRebel, LLC
+# SpudKick
 
 [![Photo of a space potato for the Astro Starter Theme, SpudKick](/screenshot.jpg)](https://protorebel.com)
 
-SpudKick is an Astro starter framework developed by [ProtoRebel, LLC](https://protorebel.com), based on the [Charca/Astro Blog Template](https://github.com/Charca/astro-blog-template). It provides a solid foundation for building modern, performant websites with Astro.
+An Astro 6 starter framework for building fast, content-driven sites — built and maintained by [ProtoRebel, LLC](https://protorebel.com).
 
-## Key Features
+SpudKick gives you a working blog, portfolio, contact flow, and email signature generator out of the box, wired up with Content Collections, MDX, and aggressive production optimization. Originally based on the [Charca/Astro Blog Template](https://github.com/Charca/astro-blog-template).
 
-- ✅ **Astro 5.1.1:** Utilizes the latest version of the Astro static site generator.
-- ✅ **Astro-native ViewTransitions:** Enables smooth transitions between pages for enhanced user experience.
-- ✅ **PostCSS Support:** Integrated PostCSS for advanced CSS processing and styling.
-- ✅ **ESLint + Editor Config:** Includes ESLint for code linting and consistent code style.
-- ✅ **HTML Email Signature Generator:** Generates HTML email signatures.
-- ✅ **Business & Social Network Data Helpers:** Provides utilities for managing business and social network information.
-- ✅ **Full Markdown Support:** Supports writing content in Markdown format.
-- ✅ **SEO-friendly Setup:** Optimized for search engines with canonical URLs and OpenGraph data.
-- ✅ **RSS 2.0 Generation:** Generates RSS 2.0 feeds for content syndication.
-- ✅ **Sitemap.xml Generation:** Automatically creates a sitemap for improved crawlability.
-- ✅ **404 Page Support for Apache Hosting:** Includes a 404 error page configuration for Apache servers.
-- ✅ **.htaccess Optimization:** Provides `.htaccess` configurations for gzip compression, HTTPS enforcement, and expires headers.
+---
+
+## Tech Stack
+
+- **[Astro 6.2.2](https://astro.build)** — Content-first web framework
+- **TypeScript** — Strict mode via `astro/tsconfigs/strict`
+- **MDX** — Components inline with markdown content
+- **Plain CSS** — No preprocessor, native nesting and custom properties
+- **ESLint + EditorConfig** — Consistent code style across the project
+
+## Features
+
+### Content & Routing
+- **Content Layer API** — Type-safe collections for blog and work entries with Zod schemas
+- **MDX support** — Mix Astro components into markdown when you need richer content
+- **View transitions** — Smooth page-to-page transitions on shared elements (images, titles, navigation)
+- **Custom pagination** — Offset-based with a configurable "first page extra" for featured posts
+- **Draft filtering** — `draft: true` posts are visible in dev, hidden in production builds
+
+### Performance
+- **Native HTML minification** — Astro's compiler-level `compressHTML: 'jsx'`
+- **SVG optimization** — Build-time SVGO pass via `experimental.svgOptimizer`
+- **JS minification** — esbuild for JavaScript, Lightning CSS for stylesheets
+- **Single-bundle CSS** — One long-cached CSS file, no font-flashing on navigation
+- **Hashed asset filenames** — Long-cache friendly (`Cache-Control: immutable`)
+- **Post-build compression** — `@playform/compress` minifies inline JS and SVG
+
+### SEO & Discoverability
+- **Sitemap generation** — Automatic via `@astrojs/sitemap`
+- **OpenGraph + canonical URLs** — Set per-page from frontmatter
+- **`robots.txt`** — Crawler access control in `public/`
+- **Structured 404** — Custom error page with Apache integration
+
+### Production
+- **Apache `.htaccess`** — Pre-configured for HTTPS redirect, gzip/Brotli, and far-future expires headers
+- **PWA-ready** — Web manifest scaffolding for installable apps
+- **Email signature generator** — `/signature` route renders an HTML signature ready to paste into any client
+
+---
 
 ## Project Structure
-
-The project is organized into the following directories:
 
 ```
 /
 ├── public/
 │   ├── assets/
-│   │   ├── blog/
-│   │   ├── images/
-│   │   ├── portfolio/
+│   │   ├── blog/         # Blog post images
+│   │   ├── work/         # Work/portfolio images
+│   │   ├── images/       # General site images
 │   │   └── video/
-│   ├── fonts/
-│   │   └── fontFile.ttf
-│   ├── .htaccess
-│   ├── favicon.ico
-│   ├── favicon.svg
-│   ├── opengraph.jpg
+│   ├── fonts/            # Self-hosted font files
+│   ├── .htaccess         # Apache production config
+│   ├── favicon.{ico,svg}
+│   ├── opengraph.jpg     # Default social share image
+│   ├── manifest.webmanifest
 │   └── robots.txt
 ├── src/
+│   ├── content/
+│   │   ├── blog/         # Blog post .md / .mdx files
+│   │   └── work/         # Portfolio entry .md / .mdx files
+│   ├── content.config.ts # Collection schemas (Zod)
 │   ├── blocks/
 │   │   ├── Footer.astro
 │   │   └── Header.astro
@@ -48,8 +76,8 @@ The project is organized into the following directories:
 │   ├── pages/
 │   │   ├── blog/
 │   │   │   ├── [slug].astro
-│   │   │   └── index.astro
-│   │   ├── portfolio/
+│   │   │   └── [...page].astro
+│   │   ├── work/
 │   │   │   ├── [slug].astro
 │   │   │   └── index.astro
 │   │   ├── 404.astro
@@ -67,62 +95,116 @@ The project is organized into the following directories:
 │   │   ├── reset.css
 │   │   └── variables.css
 │   └── utils/
-│       ├── getBlogData.ts
+│       ├── getBlog.ts
 │       ├── getBusinessInfo.ts
-│       ├── getPortfolioData.ts
+│       ├── getWork.ts
 │       └── getSocial.ts
+├── astro.config.mjs
+├── tsconfig.json
 └── package.json
 ```
 
-### Key Directories
+---
 
-- `public/`: Contains static assets such as images, fonts, and favicons.
-- `src/pages/`: Holds Astro components that define the website's routes and pages. Each `.astro` or `.md` file in this directory is exposed as a route based on its filename.
-- `src/layouts/`: Contains layout components that provide a consistent structure for pages.
-- `src/partials/`: Contains reusable UI components.
-- `src/styles/`: Contains CSS files for styling the website.
-- `src/utils/`: Contains utility functions for data fetching and manipulation.
+## Content Collections
+
+Content lives in `src/content/blog/` and `src/content/work/` as markdown or MDX files. Schemas are defined in `src/content.config.ts` and validated at build time via Zod.
+
+### Adding a blog post
+
+Create `src/content/blog/my-post.md` with frontmatter:
+
+```yaml
+---
+title: "Post title"
+subTitle: "Hook line"
+publishDate: 2026-05-06
+description: "One-sentence summary for cards and SEO"
+featuredImage:
+  img: my-post.jpg
+  title: "Image alt text"
+cta:
+  before: "Want to"
+  words: ["build", "ship", "scale"]
+  after: "your next site?"
+draft: false
+---
+
+Your markdown content here.
+```
+
+Drafts (`draft: true`) render in development but are filtered out of production builds.
+
+### Adding a work entry
+
+See `src/content.config.ts` for the full work schema. Image paths are relative to the `imgPath` field, allowing per-project image folders under `public/assets/work/<client>/`.
+
+### Switching to MDX
+
+Rename any `.md` file to `.mdx` to start using component imports inline. The glob pattern matches both extensions automatically — no config change needed.
+
+---
 
 ## Styling
 
-The project uses CSS files for styling, located in `src/styles/`:
+Plain CSS using modern features. No preprocessor.
 
-- `reset.css`: A CSS reset file (based on Meyer Reset) to normalize styles across browsers.
-- `variables.css`: Defines CSS variables for consistent theming and styling.
-- `global.css`: Contains global styles and imports the variables and reset files.
+- **`reset.css`** — Meyer-style reset, normalizes browser defaults
+- **`variables.css`** — Custom properties for colors, spacing, typography, transitions
+- **`global.css`** — Site-wide styles, imports the above
 
-## Fonts
+Native CSS nesting is used throughout. All design tokens are CSS custom properties — themable at the `:root` level.
 
-The project uses the following fonts, defined in `src/styles/variables.css`:
+### Fonts
 
-- 'Bebas Neue' (for decorative elements)
-- 'Cormorant' (a serif font)
-- 'Outfit' (the default sans-serif font)
+Self-hosted from `public/fonts/`:
 
-These fonts are loaded from the `public/fonts/` directory.
+- **Bebas Neue** — Display headings, decorative elements
+- **Cormorant** — Serif accents
+- **Outfit** — Default sans-serif body text
+
+---
 
 ## Commands
 
-All commands are run from the root of the project in the terminal:
-
 | Command           | Action                                                        |
 | :---------------- | :------------------------------------------------------------ |
-| `npm install`     | Installs dependencies                                         |
-| `npm run dev`     | Starts the local development server at `localhost:4321`       |
-| `npm run lint`    | Lints the code using ESLint                                   |
-| `npm run build`   | Runs `lint` and then builds the production site to `./dist/`  |
-| `npm run preview` | Preview the built site locally before deploying              |
+| `npm install`     | Install dependencies                                          |
+| `npm run dev`     | Start the dev server at `localhost:4321`                      |
+| `npm run lint`    | Lint with ESLint                                              |
+| `npm run build`   | Lint, then build to `./dist/`                                 |
+| `npm run preview` | Preview the production build locally                          |
+
+---
 
 ## Configuration
 
-- `sandbox.config.json`: Configures the development environment.
-  - `hardReloadOnChange`: Set to `false` for soft reloads during development.
+### `astro.config.mjs`
+Site URL, integrations (MDX, sitemap, compress), markdown plugins (GFM, smartypants, external links), redirects, Vite build options, and the experimental SVG optimizer.
 
-## SEO
+### `tsconfig.json`
+Extends `astro/tsconfigs/strict` for full type safety with the Content Layer API.
 
-- `robots.txt`: Located in the `public/` directory. Controls crawler access.
-- `Sitemap.xml`: Automatically generated for improved search engine crawlability.
+### `content.config.ts`
+Defines the `blog` and `work` collections with Zod schemas. Frontmatter is validated against these at build time — typos in field names fail the build instead of silently breaking templates.
 
-## Want to learn more?
+---
 
-Feel free to check [Astro's documentation](https://docs.astro.build) or join Astro's [Discord server](https://astro.build/chat).
+## Production Deployment
+
+The included `.htaccess` is tuned for Apache and handles:
+
+- HTTPS enforcement
+- Gzip/Brotli compression negotiation
+- Far-future cache headers for hashed assets
+- SPA-style fallback for the 404 page
+
+For other hosts (Cloudflare Pages, Netlify, Vercel), the `.htaccess` is ignored and Astro's static output works as-is. Configure cache headers via your host's preferred method.
+
+---
+
+## Learn More
+
+- [Astro Documentation](https://docs.astro.build)
+- [Content Collections Guide](https://docs.astro.build/en/guides/content-collections/)
+- [Astro Discord](https://astro.build/chat)
