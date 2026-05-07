@@ -67,7 +67,6 @@ export default defineConfig({
 			assetsInlineLimit: 0,
 			minify: 'esbuild',
 			cssMinify: 'lightningcss'
-			// ← removed custom rollupOptions, let Astro handle asset paths
 		}
 	},
 

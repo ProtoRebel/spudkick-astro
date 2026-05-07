@@ -1,49 +1,57 @@
-import { defineCollection, z } from 'astro:content';
+import { defineConfig, svgoOptimizer } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
+import compress from '@playform/compress';
+import remarkGfm from 'remark-gfm';
+import remarkSmartypants from 'remark-smartypants';
+import rehypeExternalLinks from 'rehype-external-links';
 
-const blogCollection = defineCollection({
-	type: 'content',
-	schema: z.object({
-		title: z.string(),
-		subTitle: z.string(),
-		publishDate: z.string(),
-		description: z.string(),
-		featuredImage: z.object({
-			img: z.string(),
-			title: z.string()
+export default defineConfig({
+	site: 'https://spudkick-astro.pages.dev/',
+
+	compressHTML: 'jsx',
+
+	experimental: {
+		svgOptimizer: svgoOptimizer(),
+	},
+
+	integrations: [
+		mdx(),
+		sitemap(),
+		compress({
+			CSS: false,
+			HTML: false,
+			Image: false,
+			JavaScript: true,
+			SVG: true,
 		}),
-		cta: z.object({
-			before: z.string(),
-			words: z.array(z.string()),
-			after: z.string()
-		}),
-		draft: z.boolean().optional().default(false)
-	})
-});
+	],
 
-const workCollection = defineCollection({
-	type: 'content',
-	schema: z.object({
-		client: z.string(),
-		tagline: z.string(),
-		affiliate: z.string().nullable(),
-		searchTerm: z.string(),
-		searchLink: z.string(),
-		launchDate: z.string(),
-		scope: z.string(),
-		imgPath: z.string(),
-		logo: z.string(),
-		emblem: z.string(),
-		photoFeatured: z.string(),
-		photos: z.array(z.object({
-			img: z.string(),
-			title: z.string(),
-			size: z.string()
-		})),
-		draft: z.boolean().optional().default(false)
-	})
-});
+	markdown: {
+		shikiConfig: { theme: 'nord' },
+		remarkPlugins: [remarkGfm, remarkSmartypants],
+		rehypePlugins: [
+			[
+				rehypeExternalLinks,
+				{ target: '_blank', rel: ['nofollow', 'noopener', 'noreferrer'] },
+			],
+		],
+	},
 
-export const collections = {
-	blog: blogCollection,
-	work: workCollection
-};
+	redirects: {
+		'/about/': { destination: '/how-it-works/', status: 301 },
+		'/portfolio/': { destination: '/work/', status: 301 },
+	},
+
+	vite: {
+		logLevel: 'info',
+		build: {
+			cssCodeSplit: false,
+			assetsInlineLimit: 0,
+			minify: 'esbuild',
+			cssMinify: 'lightningcss',
+		},
+	},
+
+	devToolbar: { enabled: false },
+});
