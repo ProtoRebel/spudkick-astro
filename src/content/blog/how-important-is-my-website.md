@@ -1,7 +1,7 @@
 ---
 title: "\"How Important Is My Website?\""
 subTitle: A Rant on the Digital Landscape
-publishDate: 25 Oct 2024
+publishDate: 2024-10-25
 description: A website’s just a mirror - make it clear, make it true, and make it work for you. Keep it real, skip the fluff, and focus on what actually keeps your business thriving.
 featuredImage:
   img: open-sign.webp

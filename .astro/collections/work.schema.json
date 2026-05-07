@@ -9,14 +9,7 @@
       "type": "string"
     },
     "affiliate": {
-      "anyOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "type": "string"
     },
     "searchTerm": {
       "type": "string"
@@ -25,7 +18,8 @@
       "type": "string"
     },
     "launchDate": {
-      "type": "string"
+      "type": "string",
+      "format": "date-time"
     },
     "scope": {
       "type": "string"
@@ -75,7 +69,6 @@
   "required": [
     "client",
     "tagline",
-    "affiliate",
     "searchTerm",
     "searchLink",
     "launchDate",

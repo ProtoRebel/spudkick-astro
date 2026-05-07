@@ -1,23 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import Page from '../../layouts/Page.astro';
-import Button from "../../partials/Button.astro";
+import Button from '../../partials/Button.astro';
 
-let workEntries = [];
-let error = null;
-
-try {
-  workEntries = await getCollection('work');
-} catch (e) {
-  error = e;
-  console.error('Error fetching work collection:', e);
-}
-
-if (workEntries.length > 0) {
-  workEntries.sort((a, b) =>
-    new Date(b.data.launchDate).getTime() - new Date(a.data.launchDate).getTime()
-  );
-}
+const workEntries = (await getCollection('work')).toSorted(
+	(a, b) => b.data.launchDate.valueOf() - a.data.launchDate.valueOf(),
+);
 
 const title = 'Our Work: Stuff That Actually Works';
 const description = 'Dive into our portfolio of websites, apps, and eCommerce projects built to last. No shortcuts—just real results.';
@@ -25,140 +13,136 @@ const permalink = new URL('work', Astro.site).toString();
 ---
 
 <Page title={title} description={description} permalink={permalink} current="work">
+	<section class="work">
+		{workEntries.map((work) => {
+			const workImgPath = work.data.imgPath;
+			return (
+				<article>
+					<a href={`/work/${work.id}`}>
+						<header transition:name={`work-header-${work.id}`}>
+							<img
+								src={`${workImgPath}${work.data.photoFeatured}`}
+								width="960"
+								height="720"
+								class="featured"
+								alt={`Featured image for ${work.data.client}`}
+								transition:name={`work-featured-${work.id}`}
+							/>
+							<h2 transition:name={`work-title-${work.id}`}>
+								<img
+									src={`${workImgPath}${work.data.emblem}`}
+									width="192"
+									height="192"
+									class="emblem"
+									alt={`Emblem for ${work.data.client}`}
+									transition:name={`work-logo-${work.id}`}
+								/>
+								<strong>{work.data.client}</strong>
+								<small>{work.data.searchTerm}</small>
+							</h2>
+						</header>
+					</a>
+				</article>
+			);
+		})}
+	</section>
 
-  <section class="work">
-    {workEntries.map((work) => {
-      const workSlug = work.id.split('.')[0];
-      const workImgPath = work.data.imgPath;
-      return (
-        <article>
-          <a href={`/work/${workSlug}`}>
-            <header transition:name=`work-header-${workSlug}`>
-              <img
-                src=`${workImgPath}${work.data.photoFeatured}`
-                width="960"
-                height="720"
-                class="featured"
-                transition:name=`work-featured-${workSlug}`
-                alt=`Featured image for ${work.data.client}`
-              />
-              <h2 transition:name=`work-title-${workSlug}`>
-                <img
-                  src=`${workImgPath}${work.data.emblem}`
-                  width="192"
-                  height="192"
-                  class="emblem"
-                  alt=`Emblem for ${work.data.client}`
-                  transition:name=`work-logo-${workSlug}`
-                />
-                <strong>
-                  {work.data.client}
-                </strong>
-                <small>{work.data.searchTerm}</small>
-              </h2>
-            </header>
-          </a>
-        </article>
-      )
-    })}
-  </section>
+	<section>
+		<hr class="bottom" />
+	</section>
 
-  <section>
-    <hr class="bottom" />
-  </section>
-
-  <section id="cta">
-    <Button url="#schedule" title="Let's Talk" />
-  </section>
+	<section id="cta">
+		<Button url="#schedule" title="Let's Talk" />
+	</section>
 </Page>
 
 <style>
-  section {
-    padding: var(--pad);
-    max-width: var(--layout-max--reading);
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: var(--pad);
-  }
+	section {
+		padding: var(--pad);
+		max-width: var(--layout-max--reading);
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: var(--pad);
+	}
 
-  a {
-    aspect-ratio: 4/3;
-    width: 100%;
-    position: relative;
-    text-decoration: none;
+	a {
+		aspect-ratio: 4/3;
+		width: 100%;
+		position: relative;
+		text-decoration: none;
 
-    &:hover {
-      .featured {
-        transform: scale(0.95);
-      }
+		&:hover {
+			.featured {
+				transform: scale(0.95);
+			}
 
-      .arrow {
-        opacity: 1;
-      }
+			.arrow {
+				opacity: 1;
+			}
 
-      h2 {
-        transform: translateY(-1rem);
-      }
-    }
-  }
+			h2 {
+				transform: translateY(-1rem);
+			}
+		}
+	}
 
-  h2 {
-    padding: 0 0 0 4.5rem;
-    margin: 0;
-    font-size: var(--font-size--huge);
-    line-height: 1.5;
-    transition: var(--transition-hover);
+	h2 {
+		padding: 0 0 0 4.5rem;
+		margin: 0;
+		font-size: var(--font-size--huge);
+		line-height: 1.5;
+		transition: var(--transition-hover);
 
-    small {
-      display: block;
-      font-family: var(--font-family--default);
-      color: var(--color-white);
-      font-size: var(--font-size);
-      text-transform: none;
-    }
-  }
+		small {
+			display: block;
+			font-family: var(--font-family--default);
+			color: var(--color-white);
+			font-size: var(--font-size);
+			text-transform: none;
+		}
+	}
 
-  .featured {
-    transition: var(--transition-grow);
-  }
+	.featured {
+		transition: var(--transition-grow);
+	}
 
-  .arrow {
-    color: var(--color-white);
-    font-size: 0.5em;
-    opacity: 0;
-    transition: var(--transition-hover);
-  }
+	.arrow {
+		color: var(--color-white);
+		font-size: 0.5em;
+		opacity: 0;
+		transition: var(--transition-hover);
+	}
 
-  .emblem {
-    width: 4rem;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-  }
+	.emblem {
+		width: 4rem;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+	}
 
-  .bottom {
-    margin: var(--pad-double) auto;
-  }
+	.bottom {
+		margin: var(--pad-double) auto;
+	}
 
-  #cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--pad-quad);
-  }
+	#cta {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: var(--pad-quad);
+	}
 
-  @media (min-width: 960px) {
-    article {
-      width: calc(50% - var(--pad));
-    }
+	@media (min-width: 960px) {
+		article {
+			width: calc(50% - var(--pad));
+		}
 
-    h2 {
-      font-size: var(--font-size--large);
+		h2 {
+			font-size: var(--font-size--large);
 
-      small {
-        font-size: 0.65em;
-      }
-    }
-  }
+			small {
+				font-size: 0.65em;
+			}
+		}
+	}
 </style>

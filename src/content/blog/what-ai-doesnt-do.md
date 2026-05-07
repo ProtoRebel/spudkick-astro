@@ -1,7 +1,7 @@
 ---
 title: What AI does(n’t) do for Software
 subTitle: "\"They're coming to take me away\" — Jello Biafra, LARD"
-publishDate: 31 Dec 2024
+publishDate: 2024-12-31
 description: Explore the bold truth about AI in software development - why it won't replace developers, its real strengths, and how to use it effectively without losing your mind.
 featuredImage:
   img: computer-brain.webp

@@ -1,7 +1,7 @@
 ---
 title: Build Lean or Die Bloated
 subTitle: "\"Take only what you need to survive\" — Lone Starr, Spaceballs"
-publishDate: 10 Nov 2024
+publishDate: 2024-11-10
 description: Learn how Lean Development cuts the bloat, saves budget, and keeps your digital product relevant with only the essentials.
 featuredImage:
   img: luggage.webp

@@ -1,12 +1,13 @@
 ---
 import { type GetStaticPaths } from 'astro';
+import { render } from 'astro:content';
 import Page from '../../layouts/Page.astro';
 import { getBlog, getImagePath } from '../../utils/getBlog';
 
 export const getStaticPaths = (async () => {
 	const { posts } = await getBlog();
 	return posts.map((post) => ({
-		params: { slug: post.slug },
+		params: { slug: post.id },
 	}));
 }) satisfies GetStaticPaths;
 
@@ -17,7 +18,13 @@ if (!response) {
 }
 const { post, navigation } = response;
 
-const { Content } = await post.render();
+const { Content } = await render(post);
+
+const dateFormatter = new Intl.DateTimeFormat('en-US', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
 
 const title = `Blog: ${post.data.title}`;
 const description = post.data.description;
@@ -29,18 +36,18 @@ const permalink = new URL(`blog/${slug}`, Astro.site).toString();
 	<section>
 		<article>
 			<header>
-				<h1 transition:name={`title-${post.slug}`}>
+				<h1 transition:name={`title-${post.id}`}>
 					{post.data.title}
 				</h1>
 				<p class="subtitle">
 					{post.data.subTitle}
 				</p>
-				<time datetime={post.data.publishDate} transition:name={`meta-${post.slug}`}>
-					{post.data.publishDate}
+				<time datetime={post.data.publishDate.toISOString()} transition:name={`meta-${post.id}`}>
+					{dateFormatter.format(post.data.publishDate)}
 				</time>
 			</header>
 
-			<div class="image" transition:name={`img-${post.slug}`}>
+			<div class="image" transition:name={`img-${post.id}`}>
 				<img
 					src={getImagePath(post.data.featuredImage.img)}
 					alt={post.data.featuredImage.title}
@@ -57,13 +64,13 @@ const permalink = new URL(`blog/${slug}`, Astro.site).toString();
 	<section>
 		<nav transition:name="blog-navigation">
 			{navigation.prev && (
-				<a href={`/blog/${navigation.prev.slug}`} class="previous">
+				<a href={`/blog/${navigation.prev.id}`} class="previous">
 					<span class="tense">Newer</span>
 					<strong>{navigation.prev.data.title}</strong>
 				</a>
 			)}
 			{navigation.next && (
-				<a href={`/blog/${navigation.next.slug}`} class="next">
+				<a href={`/blog/${navigation.next.id}`} class="next">
 					<span class="tense">Older</span>
 					<strong>{navigation.next.data.title}</strong>
 				</a>

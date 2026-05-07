@@ -1,57 +1,51 @@
-import { defineConfig, svgoOptimizer } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-import compress from '@playform/compress';
-import remarkGfm from 'remark-gfm';
-import remarkSmartypants from 'remark-smartypants';
-import rehypeExternalLinks from 'rehype-external-links';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
 
-export default defineConfig({
-	site: 'https://spudkick-astro.pages.dev/',
-
-	compressHTML: 'jsx',
-
-	experimental: {
-		svgOptimizer: svgoOptimizer(),
-	},
-
-	integrations: [
-		mdx(),
-		sitemap(),
-		compress({
-			CSS: false,
-			HTML: false,
-			Image: false,
-			JavaScript: true,
-			SVG: true,
-		}),
-	],
-
-	markdown: {
-		shikiConfig: { theme: 'nord' },
-		remarkPlugins: [remarkGfm, remarkSmartypants],
-		rehypePlugins: [
-			[
-				rehypeExternalLinks,
-				{ target: '_blank', rel: ['nofollow', 'noopener', 'noreferrer'] },
-			],
-		],
-	},
-
-	redirects: {
-		'/about/': { destination: '/how-it-works/', status: 301 },
-		'/portfolio/': { destination: '/work/', status: 301 },
-	},
-
-	vite: {
-		logLevel: 'info',
-		build: {
-			cssCodeSplit: false,
-			assetsInlineLimit: 0,
-			minify: 'esbuild',
-			cssMinify: 'lightningcss',
-		},
-	},
-
-	devToolbar: { enabled: false },
+// Shared schema for image references (mixed local/external — kept as strings).
+const imageRef = z.object({
+	img: z.string(),
+	title: z.string(),
 });
+
+const blog = defineCollection({
+	loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/blog' }),
+	schema: z.object({
+		title: z.string(),
+		subTitle: z.string(),
+		publishDate: z.coerce.date(),
+		description: z.string(),
+		featuredImage: imageRef,
+		cta: z.object({
+			before: z.string(),
+			words: z.array(z.string()),
+			after: z.string(),
+		}),
+		draft: z.boolean().default(false),
+	}),
+});
+
+const work = defineCollection({
+	loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: './src/content/work' }),
+	schema: z.object({
+		client: z.string(),
+		tagline: z.string(),
+		affiliate: z.string().optional(),
+		searchTerm: z.string(),
+		searchLink: z.string(),
+		launchDate: z.coerce.date(),
+		scope: z.string(),
+		imgPath: z.string(),
+		logo: z.string(),
+		emblem: z.string(),
+		photoFeatured: z.string(),
+		photos: z.array(
+			imageRef.extend({
+				size: z.string(),
+			}),
+		),
+		draft: z.boolean().default(false),
+	}),
+});
+
+export const collections = { blog, work };

@@ -1,74 +1,57 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, svgoOptimizer } from 'astro/config';
 import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
+import compress from '@playform/compress';
 import remarkGfm from 'remark-gfm';
 import remarkSmartypants from 'remark-smartypants';
 import rehypeExternalLinks from 'rehype-external-links';
-import sitemap from '@astrojs/sitemap';
-import compress from '@playform/compress';
 
 export default defineConfig({
-	site: 'https://gemstateburlesque-astro.pages.dev/',
+    site: 'https://spudkick-astro.pages.dev/',
 
-	integrations: [
-		mdx(),
-		sitemap(),
-		(await import("@playform/compress")).default({
-			CSS: false, // ← FIXED: was true, breaking styles
-			HTML: {
-				"html-minifier-terser": {
-					collapseBooleanAttributes: true,
-					collapseInlineTagWhitespace: true,
-					collapseWhitespace: true,
-					conservativeCollapse: true,
-					keepClosingSlash: true,
-					minifyCSS: false,
-					minifyJS: true,
-					removeAttributeQuotes: true,
-					removeComments: true,
-					removeEmptyAttributes: true,
-					removeOptionalTags: true,
-					removeRedundantAttributes: true,
-					removeScriptTypeAttributes: false,
-					removeStyleLinkTypeAttributes: true,
-					sortAttributes: true,
-					sortClassName: false, // ← FIXED: was true, can break BEM/ordered classnames
-					trimCustomFragments: true,
-					useShortDoctype: true
-				},
-			},
-			Image: false,
-			JavaScript: true,
-			SVG: true,
-		}),
-	],
+    compressHTML: 'jsx',
 
-	markdown: {
-		shikiConfig: {
-			theme: 'nord',
-		},
-		remarkPlugins: [remarkGfm, remarkSmartypants],
-		rehypePlugins: [
-			[
-				rehypeExternalLinks,
-				{ target: '_blank' },
-			],
-		],
-	},
+    experimental: {
+        svgOptimizer: svgoOptimizer(),
+    },
 
-	redirects: {
-		'/about/': { destination: '/how-it-works/', status: 301 },
-		'/portfolio/': { destination: '/work/', status: 301 }
-	},
+    integrations: [
+        mdx(),
+        sitemap(),
+        compress({
+            CSS: false,
+            HTML: false,
+            Image: false,
+            JavaScript: true,
+            SVG: true,
+        }),
+    ],
 
-	vite: {
-		logLevel: 'info',
-		build: {
-			cssCodeSplit: false,
-			assetsInlineLimit: 0,
-			minify: 'esbuild',
-			cssMinify: 'lightningcss'
-		}
-	},
+    markdown: {
+        shikiConfig: { theme: 'nord' },
+        remarkPlugins: [remarkGfm, remarkSmartypants],
+        rehypePlugins: [
+            [
+                rehypeExternalLinks,
+                { target: '_blank', rel: ['nofollow', 'noopener', 'noreferrer'] },
+            ],
+        ],
+    },
 
-	devToolbar: { enabled: false }
+    redirects: {
+        '/about/': { destination: '/how-it-works/', status: 301 },
+        '/portfolio/': { destination: '/work/', status: 301 },
+    },
+
+    vite: {
+        logLevel: 'info',
+        build: {
+            cssCodeSplit: false,
+            assetsInlineLimit: 0,
+            minify: 'esbuild',
+            cssMinify: 'lightningcss',
+        },
+    },
+
+    devToolbar: { enabled: false },
 });
