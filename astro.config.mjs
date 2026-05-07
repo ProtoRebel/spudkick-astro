@@ -38,11 +38,6 @@ export default defineConfig({
         ],
     },
 
-    redirects: {
-        '/about/': { destination: '/how-it-works/', status: 301 },
-        '/portfolio/': { destination: '/work/', status: 301 },
-    },
-
     vite: {
         logLevel: 'info',
         build: {
