@@ -1,78 +1,70 @@
 {
-  "$ref": "#/definitions/blog",
-  "definitions": {
-    "blog": {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "subTitle": {
+      "type": "string"
+    },
+    "publishDate": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "featuredImage": {
       "type": "object",
       "properties": {
+        "img": {
+          "type": "string"
+        },
         "title": {
-          "type": "string"
-        },
-        "subTitle": {
-          "type": "string"
-        },
-        "publishDate": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "featuredImage": {
-          "type": "object",
-          "properties": {
-            "img": {
-              "type": "string"
-            },
-            "title": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "img",
-            "title"
-          ],
-          "additionalProperties": false
-        },
-        "cta": {
-          "type": "object",
-          "properties": {
-            "before": {
-              "type": "string"
-            },
-            "words": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            "after": {
-              "type": "string"
-            }
-          },
-          "required": [
-            "before",
-            "words",
-            "after"
-          ],
-          "additionalProperties": false
-        },
-        "draft": {
-          "type": "boolean",
-          "default": false
-        },
-        "$schema": {
           "type": "string"
         }
       },
       "required": [
-        "title",
-        "subTitle",
-        "publishDate",
-        "description",
-        "featuredImage",
-        "cta"
-      ],
-      "additionalProperties": false
+        "img",
+        "title"
+      ]
+    },
+    "cta": {
+      "type": "object",
+      "properties": {
+        "before": {
+          "type": "string"
+        },
+        "words": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "after": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "before",
+        "words",
+        "after"
+      ]
+    },
+    "draft": {
+      "default": false,
+      "type": "boolean"
+    },
+    "$schema": {
+      "type": "string"
     }
   },
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "required": [
+    "title",
+    "subTitle",
+    "publishDate",
+    "description",
+    "featuredImage",
+    "cta"
+  ]
 }

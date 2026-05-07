@@ -5,7 +5,6 @@ import remarkSmartypants from 'remark-smartypants';
 import rehypeExternalLinks from 'rehype-external-links';
 import sitemap from '@astrojs/sitemap';
 import compress from '@playform/compress';
-import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
 	site: 'https://gemstateburlesque-astro.pages.dev/',
@@ -72,7 +71,5 @@ export default defineConfig({
 		}
 	},
 
-	devToolbar: { enabled: false },
-
-	adapter: cloudflare()
+	devToolbar: { enabled: false }
 });

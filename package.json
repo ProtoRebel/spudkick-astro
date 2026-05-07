@@ -1,27 +1,27 @@
 {
   "name": "protorebel-spudkick-astro",
-	"version": "0.0.2",
-	"scripts": {
-		"dev": "astro dev",
-		"start": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/mdx": "^4.0.6",
-		"@astrojs/rss": "^4.0.11",
-		"@astrojs/sitemap": "^3.2.1",
-		"astro": "^5.1.7",
-		"date-fns": "^4.1.0",
-		"markdown-it": "^14.1.0",
-		"reading-time": "^1.5.0",
-		"rehype-external-links": "^3.0.0",
-		"remark-gfm": "^4.0.0",
-		"remark-smartypants": "^2.0.0",
-		"sanitize-html": "^2.14.0"
-	},
-	"devDependencies": {
-		"@playform/compress": "^0.1.7"
-	}
+  "version": "0.0.2",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.4",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.2.1",
+    "astro": "^6.2.2",
+    "date-fns": "^4.1.0",
+    "markdown-it": "^14.1.0",
+    "reading-time": "^1.5.0",
+    "rehype-external-links": "^3.0.0",
+    "remark-gfm": "^4.0.0",
+    "remark-smartypants": "^2.0.0",
+    "sanitize-html": "^2.14.0"
+  },
+  "devDependencies": {
+    "@playform/compress": "^0.2.3"
+  }
 }
